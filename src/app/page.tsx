@@ -15,8 +15,13 @@ import {
 } from '@/components/ui';
 import ProfileImage from '@/components/ProfileImage';
 
+interface TypingEffectProps {
+  text: string;
+  speed?: number;
+}
+
 // Animation for typing effect
-const TypingEffect = ({ text, speed = 100 }) => {
+const TypingEffect = ({ text, speed = 100 }: TypingEffectProps) => {
   const [displayText, setDisplayText] = useState('');
   const [index, setIndex] = useState(0);
 
