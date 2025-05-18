@@ -1,0 +1,11 @@
+# Task ID: 10
+# Title: Admin Content Management Interfaces
+# Status: pending
+# Dependencies: 5, 6, 9
+# Priority: high
+# Description: Build admin interfaces for managing projects and blog posts.
+# Details:
+Create forms for adding, editing, and deleting projects and blog posts. Support image uploads and rich text. Mark projects as featured. Implement draft/publish workflow for blog posts.
+
+# Test Strategy:
+Manual and automated testing for CRUD operations, image uploads, and draft/publish workflow.

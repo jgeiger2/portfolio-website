@@ -1,0 +1,223 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Setup Project Repository and Initial Configuration",
+      "description": "Initialize the project repository with Next.js, React, and Firebase, and configure basic tooling.",
+      "details": "Create a new Next.js 14+ project. Set up npm/Yarn, ESLint, Prettier, and Git. Initialize Firebase project and link to the frontend. Configure basic CI/CD (GitHub Actions or Vercel).",
+      "testStrategy": "Verify repository setup, linting, and basic build process. Confirm Firebase project linkage.",
+      "priority": "high",
+      "dependencies": [],
+      "status": "in-progress",
+      "subtasks": []
+    },
+    {
+      "id": 2,
+      "title": "Design System and UI Component Library",
+      "description": "Implement the glassmorphic design system and reusable UI components.",
+      "details": "Define Tailwind/styled-components theme with dark mode, glassmorphic cards, neon accents, and responsive breakpoints. Create reusable components for cards, buttons, forms, and navigation. Document component usage.",
+      "testStrategy": "Visual regression testing. Manual review for design consistency and accessibility. Test responsive behavior.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 3,
+      "title": "Implement Core Navigation and Layout",
+      "description": "Build the main navigation and consistent page layout structure.",
+      "details": "Create a responsive header and footer. Implement sticky/fixed navigation. Ensure consistent spacing and grid-based layouts. Support mobile hamburger menu.",
+      "testStrategy": "Manual and automated testing for navigation, responsiveness, and accessibility. Check for WCAG 2.1 AA compliance.",
+      "priority": "high",
+      "dependencies": [
+        2
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 4,
+      "title": "Homepage Implementation",
+      "description": "Develop the homepage with hero section, featured projects, and blog previews.",
+      "details": "Build hero section with animated elements. Display featured projects and blog posts. Implement quick navigation. Use Framer Motion for animations.",
+      "testStrategy": "Manual and automated testing for content display, animations, and navigation. Check Lighthouse performance score.",
+      "priority": "high",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 5,
+      "title": "Projects Database and Gallery",
+      "description": "Set up Firestore database for projects and implement the projects gallery.",
+      "details": "Define Firestore schema for projects (title, description, tech, images, links). Build filterable grid/gallery UI. Implement detailed project view. Support image uploads.",
+      "testStrategy": "Manual and automated testing for CRUD operations, filtering, and image display. Check for performance and accessibility.",
+      "priority": "high",
+      "dependencies": [
+        1,
+        2
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 6,
+      "title": "Blog Database and Post Management",
+      "description": "Set up Firestore for blog posts and implement blog listing and detail pages.",
+      "details": "Define Firestore schema for posts (title, content, date, tags, images). Build chronological listing with pagination and tag filtering. Support rich text (MDX/Draft.js). Implement admin interface for post management.",
+      "testStrategy": "Manual and automated testing for CRUD, filtering, and rich text rendering. Check for SEO and accessibility.",
+      "priority": "high",
+      "dependencies": [
+        1,
+        2
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 7,
+      "title": "Contact Page and Form Handling",
+      "description": "Implement the contact page with form validation and submission.",
+      "details": "Build contact form with fields for name, email, subject, message. Use React Hook Form and Yup for validation. Store submissions in Firestore and/or send via email (SendGrid/Firebase Extensions). Implement spam protection.",
+      "testStrategy": "Manual and automated testing for form validation, submission, and confirmation. Check for spam protection and accessibility.",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 8,
+      "title": "About Page Implementation",
+      "description": "Develop the about page with bio, skills, experience, and profile links.",
+      "details": "Display professional bio, skills, education, work experience, and optional photo. Include links to professional profiles. Ensure responsive layout.",
+      "testStrategy": "Manual and automated testing for content display and accessibility. Check for broken links.",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 9,
+      "title": "Admin Authentication and Protected Routes",
+      "description": "Implement Firebase Authentication for admin access and protect admin routes.",
+      "details": "Set up Firebase Authentication. Create login/logout UI. Protect admin routes. Implement session persistence and password reset.",
+      "testStrategy": "Manual and automated testing for authentication flow, route protection, and session management.",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 10,
+      "title": "Admin Content Management Interfaces",
+      "description": "Build admin interfaces for managing projects and blog posts.",
+      "details": "Create forms for adding, editing, and deleting projects and blog posts. Support image uploads and rich text. Mark projects as featured. Implement draft/publish workflow for blog posts.",
+      "testStrategy": "Manual and automated testing for CRUD operations, image uploads, and draft/publish workflow.",
+      "priority": "high",
+      "dependencies": [
+        5,
+        6,
+        9
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 11,
+      "title": "Contact Form Submissions Management",
+      "description": "Implement admin interface for viewing and managing contact form submissions.",
+      "details": "Display submissions in admin panel. Support marking as read/unread, deletion, and email notifications. Secure data handling.",
+      "testStrategy": "Manual and automated testing for submission management and email notifications.",
+      "priority": "medium",
+      "dependencies": [
+        7,
+        9
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 12,
+      "title": "SEO and Analytics Integration",
+      "description": "Implement SEO best practices and integrate analytics.",
+      "details": "Use next/head for meta tags and structured data. Integrate Google Analytics/Firebase Analytics. Optimize for Lighthouse and Core Web Vitals.",
+      "testStrategy": "Manual and automated testing for SEO tags, analytics tracking, and performance metrics.",
+      "priority": "medium",
+      "dependencies": [
+        1,
+        2
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 13,
+      "title": "Accessibility and Performance Optimization",
+      "description": "Ensure WCAG 2.1 AA compliance and optimize performance.",
+      "details": "Implement high contrast mode, keyboard navigation, screen reader support, and ARIA attributes. Optimize images, lazy loading, and code splitting. Ensure page load <2s.",
+      "testStrategy": "Manual and automated testing for accessibility, performance, and Lighthouse scores.",
+      "priority": "high",
+      "dependencies": [
+        2,
+        3,
+        4
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 14,
+      "title": "Error Handling and Edge Case Management",
+      "description": "Implement graceful error handling and edge case support.",
+      "details": "Handle connection issues, legacy browsers, and large media content. Provide appropriate error messages, fallbacks, and browser notifications.",
+      "testStrategy": "Manual and automated testing for error states, offline behavior, and browser compatibility.",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        3,
+        4
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 15,
+      "title": "Documentation and Deployment",
+      "description": "Prepare comprehensive documentation and deploy the website.",
+      "details": "Write README, component docs, and deployment guides. Deploy to Firebase Hosting/Vercel. Set up backups and monitoring.",
+      "testStrategy": "Manual review of documentation. Verify deployment and backup processes.",
+      "priority": "medium",
+      "dependencies": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "status": "pending",
+      "subtasks": []
+    }
+  ]
+}

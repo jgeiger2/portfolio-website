@@ -1,0 +1,11 @@
+# Task ID: 5
+# Title: Projects Database and Gallery
+# Status: pending
+# Dependencies: 1, 2
+# Priority: high
+# Description: Set up Firestore database for projects and implement the projects gallery.
+# Details:
+Define Firestore schema for projects (title, description, tech, images, links). Build filterable grid/gallery UI. Implement detailed project view. Support image uploads.
+
+# Test Strategy:
+Manual and automated testing for CRUD operations, filtering, and image display. Check for performance and accessibility.

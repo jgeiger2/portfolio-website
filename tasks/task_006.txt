@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Blog Database and Post Management
+# Status: pending
+# Dependencies: 1, 2
+# Priority: high
+# Description: Set up Firestore for blog posts and implement blog listing and detail pages.
+# Details:
+Define Firestore schema for posts (title, content, date, tags, images). Build chronological listing with pagination and tag filtering. Support rich text (MDX/Draft.js). Implement admin interface for post management.
+
+# Test Strategy:
+Manual and automated testing for CRUD, filtering, and rich text rendering. Check for SEO and accessibility.

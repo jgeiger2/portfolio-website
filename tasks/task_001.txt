@@ -1,0 +1,11 @@
+# Task ID: 1
+# Title: Setup Project Repository and Initial Configuration
+# Status: in-progress
+# Dependencies: None
+# Priority: high
+# Description: Initialize the project repository with Next.js, React, and Firebase, and configure basic tooling.
+# Details:
+Create a new Next.js 14+ project. Set up npm/Yarn, ESLint, Prettier, and Git. Initialize Firebase project and link to the frontend. Configure basic CI/CD (GitHub Actions or Vercel).
+
+# Test Strategy:
+Verify repository setup, linting, and basic build process. Confirm Firebase project linkage.

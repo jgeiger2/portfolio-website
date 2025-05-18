@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: Implement Core Navigation and Layout
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Build the main navigation and consistent page layout structure.
+# Details:
+Create a responsive header and footer. Implement sticky/fixed navigation. Ensure consistent spacing and grid-based layouts. Support mobile hamburger menu.
+
+# Test Strategy:
+Manual and automated testing for navigation, responsiveness, and accessibility. Check for WCAG 2.1 AA compliance.
