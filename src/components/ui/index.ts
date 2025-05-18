@@ -7,6 +7,7 @@ export { default as Input } from './Input';
 export { default as Section } from './Section';
 export { Header } from './Header';
 export { Footer } from './Footer';
+export { default as AnimatedBackground } from './AnimatedBackground';
 
 // Card Subcomponents
 export { CardHeader } from './Card';
