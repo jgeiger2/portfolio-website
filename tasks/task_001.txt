@@ -1,6 +1,6 @@
 # Task ID: 1
 # Title: Setup Project Repository and Initial Configuration
-# Status: in-progress
+# Status: done
 # Dependencies: None
 # Priority: high
 # Description: Initialize the project repository with Next.js, React, and Firebase, and configure basic tooling.

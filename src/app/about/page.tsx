@@ -1,0 +1,270 @@
+"use client";
+
+import React, { useState } from 'react';
+import { 
+  Container, 
+  Section, 
+  Card, 
+  CardHeader, 
+  CardTitle, 
+  CardContent,
+  Badge,
+  Button
+} from '@/components/ui';
+import Image from 'next/image';
+import ProfileImage from '@/components/ProfileImage';
+import { backgroundPatterns, cardHoverEffects, textGradients } from '@/lib/stylePatterns';
+
+// Skills data with detailed levels for visualization
+const skills = [
+  { name: 'React', level: 90, category: 'frontend' },
+  { name: 'Next.js', level: 85, category: 'frontend' },
+  { name: 'TypeScript', level: 80, category: 'language' },
+  { name: 'Node.js', level: 85, category: 'backend' },
+  { name: 'Firebase', level: 80, category: 'backend' },
+  { name: 'Tailwind CSS', level: 90, category: 'frontend' },
+  { name: 'GraphQL', level: 75, category: 'api' },
+  { name: 'MongoDB', level: 70, category: 'database' },
+  { name: 'PostgreSQL', level: 65, category: 'database' },
+  { name: 'AWS', level: 60, category: 'devops' },
+  { name: 'Docker', level: 55, category: 'devops' },
+  { name: 'CI/CD', level: 60, category: 'devops' },
+  { name: 'UI/UX Design', level: 75, category: 'design' },
+  { name: 'Responsive Design', level: 85, category: 'design' },
+  { name: 'Accessibility', level: 70, category: 'design' },
+  { name: 'Performance Optimization', level: 75, category: 'optimization' },
+];
+
+// Career timeline data
+const timelineData = [
+  {
+    title: "Product Designer",
+    company: "Lowe's",
+    period: "2024-Present",
+    description: "Leading design initiatives for digital products, collaborating with cross-functional teams to create intuitive user experiences.",
+    icon: "briefcase"
+  },
+  {
+    title: "Senior UX Designer",
+    company: "Design Agency",
+    period: "2017-2020",
+    description: "Created user-centered designs for various clients across retail, finance, and healthcare sectors.",
+    icon: "briefcase"
+  },
+  {
+    title: "UX/UI Designer",
+    company: "Tech Solutions Inc.",
+    period: "2015-2017",
+    description: "Designed interfaces for web and mobile applications with a focus on usability and accessibility.",
+    icon: "briefcase"
+  },
+  {
+    title: "Master of Education",
+    company: "University of South Florida",
+    period: "2013-2015",
+    description: "Focused on instructional design and technology integration.",
+    icon: "graduation-cap"
+  }
+];
+
+export default function AboutPage() {
+  // State for active skill category filter
+  const [activeCategory, setActiveCategory] = useState('all');
+  
+  // Filter skills based on active category
+  const filteredSkills = activeCategory === 'all' 
+    ? skills 
+    : skills.filter(skill => skill.category === activeCategory);
+
+  return (
+    <>
+      <Section className="py-20 bg-gradient-playful from-primary-100 via-background-light to-secondary-100 dark:from-primary-950 dark:via-background-dark dark:to-secondary-950 text-white overflow-hidden relative">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-accent-500 blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-tertiary-500 blur-3xl animate-float-delayed"></div>
+          <div className="absolute top-1/2 left-1/2 w-40 h-40 rounded-full bg-primary-500 blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+        </div>
+        
+        <Container>
+          <div className="flex flex-col lg:flex-row items-start gap-10 max-w-6xl mx-auto relative z-10">
+            {/* Left column with profile image and about text */}
+            <div className="w-full lg:w-2/5 flex flex-col items-center lg:items-start">
+              {/* Profile image with animation */}
+              <div className="relative shrink-0 mb-8">
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 to-tertiary-500 rounded-full blur-sm animate-pulse-slow"></div>
+                <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
+                  <ProfileImage />
+                </div>
+              </div>
+              
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">About Me</h1>
+                <div className="prose prose-lg max-w-none dark:prose-invert">
+                  <p>
+                    Hello! I'm James, a passionate full-stack developer with over 5 years of experience building modern web applications. 
+                    I specialize in React, Next.js, and Firebase, focusing on creating intuitive and performant user experiences.
+                  </p>
+                  <p>
+                    My journey in web development began when I built my first website during college. Since then, 
+                    I've worked with various companies and clients to deliver solutions that combine technical excellence with user-centric design.
+                  </p>
+                  <p>
+                    When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, 
+                    or sharing my knowledge through blog posts and community events.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Right column with career timeline */}
+            <div className="w-full lg:w-3/5 mt-10 lg:mt-0">
+              <h2 className="text-2xl font-bold mb-6 text-cyan-400 text-center lg:text-left">Career Timeline</h2>
+              
+              <div className="relative min-h-[600px]">
+                {/* Vertical line */}
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-400 via-purple-400 to-cyan-400 rounded-full"></div>
+                
+                {timelineData.map((item, index) => (
+                  <div key={index} className="relative pl-8 mb-12">
+                    {/* Timeline dot */}
+                    <div className="absolute left-0 transform -translate-x-1/2 w-10 h-10 rounded-full bg-[#001a3a] border-3 border-blue-400 z-10 flex items-center justify-center shadow-lg">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center">
+                        {item.icon === 'briefcase' ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <Card className={`border border-blue-500/30 bg-[#0a2245] text-white shadow-md ${cardHoverEffects} overflow-hidden`}>
+                      <CardHeader className="pb-2 bg-gradient-to-r from-[#0a2245] to-[#001a3a]">
+                        <CardTitle>
+                          <div className="flex flex-col">
+                            <span className="text-lg font-bold text-cyan-400">{item.title}</span>
+                            <div className="flex items-center text-xs text-gray-300">
+                              <span className="font-medium">{item.company}</span>
+                              <span className="mx-2">•</span>
+                              <span>{item.period}</span>
+                            </div>
+                          </div>
+                        </CardTitle>
+                      </CardHeader>
+                      
+                      <CardContent className="pt-3">
+                        <p className="text-gray-300 text-sm">{item.description}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Interactive Skills Section */}
+      <Section className={`py-20 ${backgroundPatterns.secondary}`}>
+        <Container>
+          <h2 className="text-3xl font-bold mb-2 text-center gradient-text-accent">Skills & Technologies</h2>
+          <p className="text-center mb-10 text-gray-600 dark:text-gray-400">Tools and technologies I work with</p>
+          
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <Button 
+              variant={activeCategory === 'all' ? 'playful' : 'outline'} 
+              size="sm" 
+              onClick={() => setActiveCategory('all')}
+              className={activeCategory !== 'all' ? 'shadow-glow-primary' : ''}
+            >
+              All
+            </Button>
+            <Button 
+              variant={activeCategory === 'frontend' ? 'accent' : 'outline'} 
+              size="sm" 
+              onClick={() => setActiveCategory('frontend')}
+              className={activeCategory !== 'frontend' ? 'shadow-glow-accent' : ''}
+            >
+              Frontend
+            </Button>
+            <Button 
+              variant={activeCategory === 'backend' ? 'tertiary' : 'outline'} 
+              size="sm" 
+              onClick={() => setActiveCategory('backend')}
+              className={activeCategory !== 'backend' ? 'shadow-glow-tertiary' : ''}
+            >
+              Backend
+            </Button>
+            <Button 
+              variant={activeCategory === 'language' ? 'primary' : 'outline'} 
+              size="sm" 
+              onClick={() => setActiveCategory('language')}
+              className={activeCategory !== 'language' ? 'shadow-glow-primary' : ''}
+            >
+              Languages
+            </Button>
+            <Button 
+              variant={activeCategory === 'database' ? 'secondary' : 'outline'} 
+              size="sm" 
+              onClick={() => setActiveCategory('database')}
+              className={activeCategory !== 'database' ? 'shadow-glow-secondary' : ''}
+            >
+              Databases
+            </Button>
+            <Button 
+              variant={activeCategory === 'devops' ? 'tertiary' : 'outline'} 
+              size="sm" 
+              onClick={() => setActiveCategory('devops')}
+              className={activeCategory !== 'devops' ? 'shadow-glow-tertiary' : ''}
+            >
+              DevOps
+            </Button>
+            <Button 
+              variant={activeCategory === 'design' ? 'accent' : 'outline'} 
+              size="sm" 
+              onClick={() => setActiveCategory('design')}
+              className={activeCategory !== 'design' ? 'shadow-glow-accent' : ''}
+            >
+              Design
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredSkills.map((skill) => (
+              <div key={skill.name} className={`bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md ${cardHoverEffects} border border-gray-200 dark:border-gray-700`}>
+                <h3 className="font-semibold mb-2">{skill.name}</h3>
+                <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full rounded-full ${
+                      skill.category === 'frontend' 
+                        ? 'bg-accent-500' 
+                        : skill.category === 'backend' 
+                          ? 'bg-tertiary-500' 
+                          : skill.category === 'design'
+                            ? 'bg-secondary-500'
+                            : skill.category === 'database'
+                              ? 'bg-blue-500'
+                              : skill.category === 'devops'
+                                ? 'bg-orange-500'
+                                : 'bg-primary-500'
+                    }`}
+                    style={{ width: `${skill.level}%` }}
+                  ></div>
+                </div>
+                <div className="mt-1 text-xs text-right text-gray-500">
+                  {skill.level}%
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+    </>
+  );
+} 

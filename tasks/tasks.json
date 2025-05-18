@@ -8,7 +8,7 @@
       "testStrategy": "Verify repository setup, linting, and basic build process. Confirm Firebase project linkage.",
       "priority": "high",
       "dependencies": [],
-      "status": "in-progress",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -21,7 +21,7 @@
       "dependencies": [
         1
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -34,7 +34,7 @@
       "dependencies": [
         2
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -48,7 +48,7 @@
         2,
         3
       ],
-      "status": "pending",
+      "status": "done",
       "subtasks": []
     },
     {
@@ -217,6 +217,20 @@
         14
       ],
       "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 16,
+      "title": "Develop Interactive Resume/CV Page with Glassmorphic Design",
+      "description": "Create a dedicated resume/CV page that presents professional experience, skills, education, and achievements in an interactive, visually appealing glassmorphic format, with PDF download functionality and seamless integration into the existing navigation and design system.",
+      "details": "Leverage the established glassmorphic design system and reusable UI components (from Task 2) to build a resume/CV page that visually aligns with the rest of the application. Structure the page to highlight sections for professional experience, skills, education, and achievements, using interactive elements such as expandable panels, tooltips, or animated transitions to enhance user engagement. Ensure all content is accessible and readable by following glassmorphism best practices—maintain sufficient contrast, avoid overly busy backgrounds, and use appropriate layering for depth and clarity. Integrate a 'Download as PDF' feature that exports the current resume content in a well-formatted, print-ready PDF, preserving the visual style as much as possible. Connect the page to the main navigation and ensure layout consistency with the core structure (from Task 3). Test across devices and browsers for responsiveness and accessibility, and document any new components or utilities added.",
+      "testStrategy": "Verify that the resume/CV page is accessible via the main navigation and matches the glassmorphic design system in appearance and interaction. Confirm that all sections (experience, skills, education, achievements) are present, interactive, and display sample data correctly. Test the PDF download feature to ensure it generates an accurate, visually consistent, and print-ready document. Check for responsive layout and usability on various screen sizes and browsers. Conduct accessibility audits to ensure text readability, proper contrast, and keyboard navigation. Review code for adherence to design and UI component standards, and validate that documentation for new components/utilities is complete.",
+      "status": "pending",
+      "dependencies": [
+        2,
+        3
+      ],
+      "priority": "medium",
       "subtasks": []
     }
   ]

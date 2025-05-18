@@ -1,6 +1,6 @@
 # Task ID: 2
 # Title: Design System and UI Component Library
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: Implement the glassmorphic design system and reusable UI components.
