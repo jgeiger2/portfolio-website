@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import OpenAI from "openai";
 
-const openai = new OpenAI();
+// Create a client with explicit API key
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY || "", // Fallback to empty string if not provided
+});
 
 export async function POST(req: Request) {
   const body = await req.json();
