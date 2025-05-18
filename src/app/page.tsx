@@ -214,7 +214,7 @@ export default function Home() {
               <Card key={post.id} className="h-full glass-effect hover:shadow-lg transition-all duration-300 hover:-translate-y-1" variant="glass">
                 <CardHeader className="border-b border-gray-200 dark:border-gray-700">
                   <div className="flex justify-between items-center mb-2">
-                    <Badge variant={index === 0 ? "primary" : index === 1 ? "accent" : "tertiary"}>
+                    <Badge variant={index === 0 ? "primary" : index === 1 ? "secondary" : "info"}>
                       {post.readTime}
                     </Badge>
                     <span className="text-sm text-gray-500">{post.date}</span>
