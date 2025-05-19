@@ -1,5 +1,10 @@
+// This file contains the Next.js configuration
+// Redeploy trigger: Updated on current date
+
+// @ts-check
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -20,15 +25,33 @@ const nextConfig = {
         protocol: "https",
         hostname: "firebasestorage.googleapis.com",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.googleusercontent.com",
+      },
     ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  transpilePackages: ["react-syntax-highlighter"],
   async rewrites() {
     return [
       {
         source: "/api/:path*",
         destination: "https://api.openai.com/:path*",
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: "/admin",
+        destination: "/admin/login",
+        permanent: true,
       },
     ];
   },
