@@ -47,6 +47,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    // Skip Firebase auth if not initialized (for static builds)
+    if (!auth) {
+      setLoading(false);
+      return () => {};
+    }
+
     // Set up the authentication state listener
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -71,6 +77,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signInWithGoogle = async () => {
+    if (!auth) {
+      console.error("Firebase auth not initialized");
+      throw new Error("Authentication not available");
+    }
+
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
@@ -81,6 +92,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signInWithEmail = async (email: string, password: string) => {
+    if (!auth) {
+      console.error("Firebase auth not initialized");
+      throw new Error("Authentication not available");
+    }
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential.user;
@@ -91,6 +107,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const createUser = async (email: string, password: string) => {
+    if (!auth) {
+      console.error("Firebase auth not initialized");
+      throw new Error("Authentication not available");
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       return userCredential.user;
@@ -101,6 +122,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const resetPassword = async (email: string) => {
+    if (!auth) {
+      console.error("Firebase auth not initialized");
+      throw new Error("Authentication not available");
+    }
+
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
@@ -110,6 +136,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOutUser = async () => {
+    if (!auth) {
+      console.error("Firebase auth not initialized");
+      throw new Error("Authentication not available");
+    }
+
     try {
       await firebaseSignOut(auth);
       // The cookie will be removed via the onAuthStateChanged listener

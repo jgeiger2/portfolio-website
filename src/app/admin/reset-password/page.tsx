@@ -26,7 +26,9 @@ export default function ResetPassword() {
       setEmail("");
     } catch (error: any) {
       console.error("Reset password error:", error);
-      if (error.code === "auth/user-not-found") {
+      if (error.message === "Authentication not available") {
+        setError("Authentication service is not available right now. Please try again later.");
+      } else if (error.code === "auth/user-not-found") {
         setError("No user found with this email address.");
       } else {
         setError("Failed to send reset email. Please try again.");

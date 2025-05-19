@@ -29,6 +29,12 @@ export const removeUserCookie = () => {
  * This should be called in the AuthContext
  */
 export const setAuthCookieListener = () => {
+  // Return no-op if auth is not available (for static builds)
+  if (!auth) {
+    console.warn("Firebase auth not initialized - token refresh disabled");
+    return () => {};
+  }
+  
   return auth.onIdTokenChanged(async (user) => {
     if (user) {
       await setUserCookie(user);

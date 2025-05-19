@@ -26,6 +26,13 @@ export default function AdminLogin() {
     setError("");
     setIsLoading(true);
 
+    // Check if Firebase auth is available
+    if (!auth) {
+      setError("Authentication service is not available right now. Please try again later.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/admin");
