@@ -5,12 +5,10 @@ import Image from 'next/image';
 
 // Profile image component with fallback to initials
 interface ProfileImageProps {
-  className?: string;
   containerClassName?: string;
 }
 
 export default function ProfileImage({ 
-  className = "", 
   containerClassName = ""
 }: ProfileImageProps) {
   const [imgError, setImgError] = useState(false);

@@ -9,12 +9,10 @@ import {
   CardHeader, 
   CardTitle, 
   CardContent,
-  Badge,
   Button
 } from '@/components/ui';
-import Image from 'next/image';
 import ProfileImage from '@/components/ProfileImage';
-import { backgroundPatterns, cardHoverEffects, textGradients } from '@/lib/stylePatterns';
+import { backgroundPatterns, cardHoverEffects } from '@/lib/stylePatterns';
 
 // Skills data with detailed levels for visualization
 const skills = [
