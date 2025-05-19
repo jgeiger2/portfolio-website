@@ -111,7 +111,7 @@ export default function Home() {
           <div className="flex flex-col items-center mb-10">
             {/* Profile Image with Animation */}
             <div className="mb-8 relative">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500 to-tertiary-500 rounded-full blur-sm animate-pulse-slow"></div>
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full blur-sm animate-pulse-slow"></div>
               <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white dark:border-background-dark shadow-xl">
                 <ProfileImage />
               </div>
@@ -121,11 +121,10 @@ export default function Home() {
               James Geiger
             </h1>
             <div className="text-xl md:text-3xl mb-8 h-12 text-center">
-              <TypingEffect text="Full-stack developer crafting digital experiences" speed={80} />
+              <TypingEffect text="Product Designer crafting accessible,  digital experiences" speed={80} />
             </div>
             <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-gray-700 dark:text-gray-300 text-center">
-              Specializing in modern web applications with React, Next.js, and cloud technologies. 
-              Building beautiful, responsive, and accessible interfaces with a focus on user experience.
+            Product designer obsessed with accessibility, rapid prototyping, and AI‑driven innovation.Partnering with teams to turn bold ideas into inclusive, responsive experiences—fast.Let’s build digital products that empower every user and push what’s possible.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button variant="outline" size="lg" asChild className="shadow-glow-primary">

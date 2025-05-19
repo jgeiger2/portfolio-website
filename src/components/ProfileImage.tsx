@@ -35,7 +35,7 @@ export default function ProfileImage({
           onError={() => setImgError(true)}
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-500 via-accent-500 to-tertiary-500 text-white font-bold text-2xl">
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-500 via-primary-700 to-secondary-500 text-white font-bold text-2xl">
           {initials}
         </div>
       )}

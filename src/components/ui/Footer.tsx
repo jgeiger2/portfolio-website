@@ -7,9 +7,9 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
   
   const socialLinks = [
-    { name: 'GitHub', url: 'https://github.com/jamesgeiger' },
-    { name: 'LinkedIn', url: 'https://linkedin.com/in/james-geiger' },
-    { name: 'Twitter', url: 'https://twitter.com/jamesgeiger' },
+    { name: 'GitHub', url: 'https://github.com/thegeigerux' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/thegeigerux/' },
+    { name: 'Instagram', url: 'https://www.instagram.com/thegeigerux/' },
   ];
 
   return (

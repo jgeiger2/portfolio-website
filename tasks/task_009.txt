@@ -1,6 +1,6 @@
 # Task ID: 9
 # Title: Admin Authentication and Protected Routes
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: Implement Firebase Authentication for admin access and protect admin routes.
