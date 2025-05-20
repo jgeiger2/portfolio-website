@@ -67,11 +67,24 @@ export const fetchProjects = async () => {
   }));
 };
 
+// Add Blog type
+export type Blog = {
+  id: string;
+  title?: string;
+  subtitle?: string;
+  body?: string;
+  category?: string;
+  datePublished?: string;
+  featuredImage?: string;
+  categories?: string[];
+  importedFromMedium?: boolean;
+};
+
 // Blog Firestore functions
-export const fetchBlogs = async () => {
+export const fetchBlogs = async (): Promise<Blog[]> => {
   const q = query(collection(db, "blog"), orderBy("datePublished", "desc"));
   const querySnapshot = await getDocs(q);
-  const blogs = querySnapshot.docs.map(doc => ({
+  const blogs: Blog[] = querySnapshot.docs.map(doc => ({
     id: doc.id,
     ...doc.data(),
   }));
