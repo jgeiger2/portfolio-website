@@ -100,7 +100,7 @@ export default function AddBlogPage() {
         />
         <div style={{ background: "#232b3a", borderRadius: 4, marginBottom: 40 }}>
           <ReactQuill
-            inputRef={quillRef}
+            ref={el => { quillRef.current = el; }}
             value={body}
             onChange={setBody}
             theme="snow"

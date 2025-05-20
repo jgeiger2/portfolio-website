@@ -201,7 +201,7 @@ export default function EditProjectPage() {
           <h3 className="text-lg font-semibold mb-2">Project Body</h3>
           <div style={{ background: "#232b3a", borderRadius: 4, marginBottom: 50 }}>
             <ReactQuill
-              inputRef={quillRef}
+              ref={el => { quillRef.current = el; }}
               value={content}
               onChange={setContent}
               theme="snow"

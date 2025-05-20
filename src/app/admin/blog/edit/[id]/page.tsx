@@ -231,7 +231,7 @@ export default function EditBlogPage() {
             className="quill-wrapper bg-gray-800 rounded-md border border-gray-700"
           >
             <ReactQuill
-              inputRef={quillRef}
+              ref={el => { quillRef.current = el; }}
               value={body}
               onChange={handleBodyChange}
               theme="snow"
