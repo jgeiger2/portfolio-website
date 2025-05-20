@@ -2,9 +2,20 @@ import { notFound } from 'next/navigation';
 import { Container, Section, Badge } from '@/components/ui';
 import { fetchBlogs } from '@/lib/firebase/firebaseUtils';
 
+// Add Blog type
+export type Blog = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  body?: string;
+  category?: string;
+  datePublished?: string;
+  // Add any other fields as needed
+};
+
 // Generate metadata for the blog post page
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const blogs = await fetchBlogs();
+  const blogs: Blog[] = await fetchBlogs();
   const blog = blogs.find(blog => blog.id === params.id);
   
   if (!blog) {
@@ -22,7 +33,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
   try {
-    const blogs = await fetchBlogs();
+    const blogs: Blog[] = await fetchBlogs();
     
     // Debug logs
     console.log("Looking for blog with ID:", params.id);
