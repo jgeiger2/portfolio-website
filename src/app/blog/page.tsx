@@ -25,9 +25,22 @@ const demoImages = {
   'Beyond Limits: NDEAM 2023 and My 11-Year Journey': '/images/placeholder/blog-placeholder-3.jpg'
 };
 
+// Add Blog type
+export type Blog = {
+  id: string;
+  title?: string;
+  subtitle?: string;
+  body?: string;
+  category?: string;
+  datePublished?: string;
+  featuredImage?: string;
+  categories?: string[];
+  importedFromMedium?: boolean;
+};
+
 export default async function BlogPage() {
   // Fetch real blog posts from Firestore
-  const blogs = await fetchBlogs();
+  const blogs: Blog[] = await fetchBlogs();
 
   // Log blogs to debug
   console.log("Blog posts found:", blogs.length);
