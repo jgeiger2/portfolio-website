@@ -18,11 +18,6 @@ export default function AddBlogPage() {
   const [datePublished, setDatePublished] = useState("");
   const router = useRouter();
 
-  // Load Quill CSS only on client-side
-  useEffect(() => {
-    import("react-quill/dist/quill.snow.css");
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await addBlog({ title, subtitle, body, category, datePublished });

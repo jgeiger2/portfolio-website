@@ -21,11 +21,6 @@ export default function AddProjectPage() {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
-  // Load Quill CSS only on client-side
-  useEffect(() => {
-    import("react-quill/dist/quill.snow.css");
-  }, []);
-
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;

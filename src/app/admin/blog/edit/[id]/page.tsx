@@ -27,9 +27,9 @@ export default function EditBlogPage() {
   const editorWrapperRef = useRef<HTMLDivElement>(null);
   
   // Load Quill CSS only on client-side
-  useEffect(() => {
-    import("react-quill/dist/quill.snow.css");
-  }, []);
+  // useEffect(() => {
+  //   import("react-quill/dist/quill.snow.css");
+  // }, []);
 
   // Fetch blog data
   useEffect(() => {

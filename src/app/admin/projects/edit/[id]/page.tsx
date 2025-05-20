@@ -23,11 +23,6 @@ export default function EditProjectPage() {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [content, setContent] = useState("");
 
-  // Load Quill CSS only on client-side
-  useEffect(() => {
-    import("react-quill/dist/quill.snow.css");
-  }, []);
-
   useEffect(() => {
     const fetchProject = async () => {
       setLoading(true);
