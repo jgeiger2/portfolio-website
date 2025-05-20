@@ -1,9 +1,19 @@
 import { fetchBlogs } from '@/lib/firebase/firebaseUtils';
 import Link from 'next/link';
 
+// Add Blog type
+export type Blog = {
+  id: string;
+  title?: string;
+  subtitle?: string;
+  body?: string;
+  category?: string;
+  datePublished?: string;
+};
+
 export default async function BlogDebugPage() {
   // Fetch blog posts
-  const blogs = await fetchBlogs();
+  const blogs: Blog[] = await fetchBlogs();
   
   return (
     <div className="p-8">
