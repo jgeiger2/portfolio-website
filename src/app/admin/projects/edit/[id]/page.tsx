@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase/firebase";
 import Image from "next/image";
-import { QuillWrapper } from "@/components/QuillWrapper";
 
 const QuillWrapper = dynamic(() => import("@/components/QuillWrapper"), { ssr: false });
 
