@@ -7,7 +7,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase/firebase";
 import Image from "next/image";
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const QuillWrapper = dynamic(() => import("@/components/QuillWrapper"), { ssr: false });
 
 export default function AddProjectPage() {
   const [title, setTitle] = useState("");
@@ -163,7 +163,7 @@ export default function AddProjectPage() {
         <div className="mt-4">
           <h3 className="text-lg font-semibold mb-2">Project Body</h3>
           <div style={{ background: "#232b3a", borderRadius: 4, marginBottom: 50 }}>
-            <ReactQuill
+            <QuillWrapper
               ref={el => { quillRef.current = el; }}
               value={content}
               onChange={setContent}

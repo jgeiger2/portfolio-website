@@ -8,7 +8,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase/firebase";
 import React from "react";
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const QuillWrapper = dynamic(() => import("@/components/QuillWrapper"), { ssr: false });
 
 export default function AddBlogPage() {
   const [title, setTitle] = useState("");
@@ -99,7 +99,7 @@ export default function AddBlogPage() {
           style={{ padding: 8, borderRadius: 4, border: "1px solid #333", background: "#232b3a", color: "#fff" }}
         />
         <div style={{ background: "#232b3a", borderRadius: 4, marginBottom: 40 }}>
-          <ReactQuill
+          <QuillWrapper
             ref={el => { quillRef.current = el; }}
             value={body}
             onChange={setBody}

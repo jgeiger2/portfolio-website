@@ -8,7 +8,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase/firebase";
 import React from "react";
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+// Replace ReactQuill dynamic import with QuillWrapper
+const QuillWrapper = dynamic(() => import("@/components/QuillWrapper"), { ssr: false });
 
 export default function EditBlogPage() {
   const router = useRouter();
@@ -230,7 +231,7 @@ export default function EditBlogPage() {
             ref={editorWrapperRef}
             className="quill-wrapper bg-gray-800 rounded-md border border-gray-700"
           >
-            <ReactQuill
+            <QuillWrapper
               ref={el => { quillRef.current = el; }}
               value={body}
               onChange={handleBodyChange}
