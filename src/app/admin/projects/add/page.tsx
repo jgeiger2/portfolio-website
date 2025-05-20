@@ -164,7 +164,7 @@ export default function AddProjectPage() {
           <h3 className="text-lg font-semibold mb-2">Project Body</h3>
           <div style={{ background: "#232b3a", borderRadius: 4, marginBottom: 50 }}>
             <ReactQuill
-              ref={quillRef}
+              inputRef={quillRef}
               value={content}
               onChange={setContent}
               theme="snow"
