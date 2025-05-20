@@ -1,7 +1,6 @@
 "use client";
 
 import Link from 'next/link';
-import { Container } from './Container';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,63 +12,42 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-background-light dark:bg-background-dark border-t border-border py-12 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute -top-16 -right-16 w-32 h-32 bg-primary-200/30 dark:bg-primary-800/20 rounded-full blur-3xl"></div>
-      <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-secondary-200/30 dark:bg-secondary-800/20 rounded-full blur-3xl"></div>
-      
-      <Container>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          <div className="md:col-span-2">
-            <Link href="/" className="text-2xl font-bold gradient-text">
+    <footer className="bg-[#0a101f] border-t border-gray-800 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Logo & description */}
+          <div>
+            <Link href="/" className="inline-block text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400">
               James Geiger
             </Link>
-            <p className="mt-3 text-muted-foreground max-w-md">
+            <p className="mt-3 text-gray-400">
               Full-stack developer specializing in modern web applications with a focus on React, NextJS, and Firebase.
             </p>
           </div>
           
+          {/* Navigation links */}
           <div>
-            <h3 className="font-semibold text-lg mb-3 text-accent-500 dark:text-accent-400">Navigation</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/" className="text-muted-foreground hover:text-primary transition duration-200 accent-underline">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="text-muted-foreground hover:text-primary transition duration-200 accent-underline">
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-muted-foreground hover:text-primary transition duration-200 accent-underline">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-muted-foreground hover:text-primary transition duration-200 accent-underline">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-primary transition duration-200 accent-underline">
-                  Contact
-                </Link>
-              </li>
+            <h4 className="text-lg font-semibold text-white mb-4">Navigation</h4>
+            <ul className="space-y-3">
+              <li><Link href="/" className="text-gray-400 hover:text-white transition duration-150 ease-in-out">Home</Link></li>
+              <li><Link href="/projects" className="text-gray-400 hover:text-white transition duration-150 ease-in-out">Projects</Link></li>
+              <li><Link href="/blog" className="text-gray-400 hover:text-white transition duration-150 ease-in-out">Blog</Link></li>
+              <li><Link href="/about" className="text-gray-400 hover:text-white transition duration-150 ease-in-out">About</Link></li>
+              <li><Link href="/contact" className="text-gray-400 hover:text-white transition duration-150 ease-in-out">Contact</Link></li>
             </ul>
           </div>
           
+          {/* Social links */}
           <div>
-            <h3 className="font-semibold text-lg mb-3 text-tertiary-500 dark:text-tertiary-400">Connect</h3>
-            <ul className="space-y-2">
-              {socialLinks.map((link) => (
+            <h4 className="text-lg font-semibold text-white mb-4">Connect</h4>
+            <ul className="space-y-3">
+              {socialLinks.map(link => (
                 <li key={link.name}>
                   <a 
                     href={link.url} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="text-muted-foreground hover:text-primary transition duration-200 accent-underline"
+                    className="text-gray-400 hover:text-white transition duration-150 ease-in-out"
                   >
                     {link.name}
                   </a>
@@ -79,27 +57,18 @@ export function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-border mt-10 pt-6 flex flex-col md:flex-row justify-between items-center relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-50/10 to-secondary-50/10 dark:from-primary-900/10 dark:to-secondary-900/10"></div>
-          <p className="text-sm text-muted-foreground relative">
+        {/* Bottom row */}
+        <div className="border-t border-gray-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-gray-500 mb-4 md:mb-0">
             © {currentYear} James Geiger. All rights reserved.
           </p>
-          <div className="mt-4 md:mt-0 relative">
-            <ul className="flex space-x-6 text-sm">
-              <li>
-                <Link href="/privacy" className="text-muted-foreground hover:text-primary transition duration-200 accent-underline">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="text-muted-foreground hover:text-primary transition duration-200 accent-underline">
-                  Terms of Service
-                </Link>
-              </li>
-            </ul>
+          <div className="flex space-x-6">
+            <Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-400">Privacy</Link>
+            <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-400">Terms</Link>
+            <Link href="/admin" className="text-sm text-gray-500 hover:text-gray-400">Admin</Link>
           </div>
         </div>
-      </Container>
+      </div>
     </footer>
   );
 } 

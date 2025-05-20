@@ -22,9 +22,9 @@ export const Card = ({
   const variantClasses = {
     glass: 'glass-card glass-light dark:glass-dark',
     solid: 'bg-white dark:bg-gray-800 shadow-md rounded-xl p-4',
-    playful: 'card-playful bg-white dark:bg-gray-800 shadow-playful-sm shadow-secondary-800/20 dark:shadow-secondary-900/20 rounded-playful p-4 border-2 border-secondary-200 dark:border-secondary-800',
-    gradient: 'bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900 dark:to-secondary-900 shadow-md rounded-xl p-4 border border-primary-100 dark:border-primary-800',
-    accent: 'bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 border-l-4 border-accent-500'
+    playful: 'card-playful bg-white dark:bg-gray-800 shadow-playful-sm shadow-secondary-800/20 dark:shadow-secondary-900/20 rounded-playful p-4 border border-secondary-200/50 dark:border-secondary-800/30',
+    gradient: 'bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900 dark:to-secondary-900 shadow-md rounded-xl p-4 border border-primary-100/50 dark:border-primary-800/30',
+    accent: 'bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 border-l-2 border-accent-500/70'
   };
   
   const hoverClasses = hover ? 'transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : '';
@@ -45,7 +45,7 @@ export const CardHeader = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className={`pb-3 border-b border-gray-200 dark:border-gray-700 mb-4 ${className}`}>
+    <div className={`pb-3 mb-4 ${className}`}>
       {children}
     </div>
   );
@@ -105,7 +105,7 @@ export const CardFooter = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className={`pt-3 mt-4 border-t border-gray-200 dark:border-gray-700 ${className}`}>
+    <div className={`pt-3 mt-4 ${className}`}>
       {children}
     </div>
   );

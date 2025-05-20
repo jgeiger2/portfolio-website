@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Container, 
@@ -13,62 +13,42 @@ import {
 } from '@/components/ui';
 import ProfileImage from '@/components/ProfileImage';
 import { backgroundPatterns, cardHoverEffects } from '@/lib/stylePatterns';
-
-// Skills data with detailed levels for visualization
-const skills = [
-  { name: 'React', level: 90, category: 'frontend' },
-  { name: 'Next.js', level: 85, category: 'frontend' },
-  { name: 'TypeScript', level: 80, category: 'language' },
-  { name: 'Node.js', level: 85, category: 'backend' },
-  { name: 'Firebase', level: 80, category: 'backend' },
-  { name: 'Tailwind CSS', level: 90, category: 'frontend' },
-  { name: 'GraphQL', level: 75, category: 'api' },
-  { name: 'MongoDB', level: 70, category: 'database' },
-  { name: 'PostgreSQL', level: 65, category: 'database' },
-  { name: 'AWS', level: 60, category: 'devops' },
-  { name: 'Docker', level: 55, category: 'devops' },
-  { name: 'CI/CD', level: 60, category: 'devops' },
-  { name: 'UI/UX Design', level: 75, category: 'design' },
-  { name: 'Responsive Design', level: 85, category: 'design' },
-  { name: 'Accessibility', level: 70, category: 'design' },
-  { name: 'Performance Optimization', level: 75, category: 'optimization' },
-];
-
-// Career timeline data
-const timelineData = [
-  {
-    title: "Product Designer",
-    company: "Lowe's",
-    period: "2024-Present",
-    description: "Leading design initiatives for digital products, collaborating with cross-functional teams to create intuitive user experiences.",
-    icon: "briefcase"
-  },
-  {
-    title: "Senior UX Designer",
-    company: "Design Agency",
-    period: "2017-2020",
-    description: "Created user-centered designs for various clients across retail, finance, and healthcare sectors.",
-    icon: "briefcase"
-  },
-  {
-    title: "UX/UI Designer",
-    company: "Tech Solutions Inc.",
-    period: "2015-2017",
-    description: "Designed interfaces for web and mobile applications with a focus on usability and accessibility.",
-    icon: "briefcase"
-  },
-  {
-    title: "Master of Education",
-    company: "University of South Florida",
-    period: "2013-2015",
-    description: "Focused on instructional design and technology integration.",
-    icon: "graduation-cap"
-  }
-];
+import { fetchSkills, fetchTimeline } from "@/lib/firebase/firebaseUtils";
 
 export default function AboutPage() {
+  // State for skills and timeline data
+  const [skills, setSkills] = useState<any[]>([]);
+  const [timelineData, setTimelineData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
   // State for active skill category filter
   const [activeCategory, setActiveCategory] = useState('all');
+  
+  // Load data on mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Fetch data from Firebase
+        const skillsData = await fetchSkills();
+        const timelineData = await fetchTimeline();
+        
+        // If no data, use defaults
+        setSkills(skillsData.length > 0 ? skillsData : defaultSkills);
+        setTimelineData(timelineData.length > 0 ? timelineData : defaultTimelineData);
+      } catch (error) {
+        console.error("Error loading data:", error);
+        // Use defaults on error
+        setSkills(defaultSkills);
+        setTimelineData(defaultTimelineData);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadData();
+  }, []);
   
   // Filter skills based on active category
   const filteredSkills = activeCategory === 'all' 
@@ -212,185 +192,183 @@ export default function AboutPage() {
                   initial="hidden"
                   animate="visible"
                 >
-                  {timelineData.map((item, index) => (
-                    <motion.div 
-                      key={index} 
-                      className="relative pl-8 mb-12"
-                      variants={itemVariants}
-                    >
-                      {/* Timeline dot */}
-                      <div className="absolute left-0 transform -translate-x-1/2 w-10 h-10 rounded-full bg-[#001a3a] border-3 border-blue-400 z-10 flex items-center justify-center shadow-lg">
-                        <motion.div 
-                          className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center"
-                          whileHover={{ scale: 1.2, rotate: 360 }}
-                          transition={{ duration: 0.6 }}
-                        >
-                          {item.icon === 'briefcase' ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                          ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                              <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                            </svg>
-                          )}
-                        </motion.div>
-                      </div>
-                      
-                      <Card className={`border border-blue-500/30 bg-[#0a2245] text-white shadow-md ${cardHoverEffects} overflow-hidden`}>
-                        <CardHeader className="pb-2 bg-gradient-to-r from-[#0a2245] to-[#001a3a]">
-                          <CardTitle>
-                            <div className="flex flex-col">
-                              <span className="text-lg font-bold text-cyan-400">{item.title}</span>
-                              <div className="flex items-center text-xs text-gray-300">
-                                <span className="font-medium">{item.company}</span>
-                                <span className="mx-2">•</span>
-                                <span>{item.period}</span>
-                              </div>
-                            </div>
-                          </CardTitle>
-                        </CardHeader>
+                  {isLoading ? (
+                    <div className="flex justify-center items-center h-60">
+                      <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
+                    </div>
+                  ) : (
+                    timelineData.map((item, index) => (
+                      <motion.div 
+                        key={index} 
+                        className="relative pl-8 mb-12"
+                        variants={itemVariants}
+                      >
+                        {/* Timeline dot */}
+                        <div className="absolute left-0 transform -translate-x-1/2 w-10 h-10 rounded-full bg-[#001a3a] border-3 border-blue-400 z-10 flex items-center justify-center shadow-lg">
+                          <motion.div 
+                            className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center"
+                            whileHover={{ scale: 1.2, rotate: 360 }}
+                            transition={{ duration: 0.6 }}
+                          >
+                            {item.icon === 'briefcase' ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
+                            ) : (
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                              </svg>
+                            )}
+                          </motion.div>
+                        </div>
                         
-                        <CardContent className="pt-3">
-                          <p className="text-gray-300 text-sm">{item.description}</p>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
+                        <Card className={`border border-blue-500/30 bg-[#0a2245] text-white shadow-md ${cardHoverEffects} overflow-hidden`}>
+                          <CardHeader className="pb-2 bg-gradient-to-r from-[#0a2245] to-[#001a3a]">
+                            <CardTitle>
+                              <div className="flex flex-col">
+                                <span className="text-lg font-bold text-cyan-400">{item.title}</span>
+                                <div className="flex items-center text-xs text-gray-300">
+                                  <span className="font-medium">{item.company}</span>
+                                  <span className="mx-2">•</span>
+                                  <span>{item.period}</span>
+                                </div>
+                              </div>
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className="py-3">
+                            <p className="text-gray-300">{item.description}</p>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    ))
+                  )}
                 </motion.div>
               </div>
             </motion.div>
           </div>
         </Container>
       </Section>
-
-      {/* Skills Section */}
-      <Section className={`py-20 ${backgroundPatterns.secondary}`}>
+      
+      <Section className="py-20 relative">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold mb-2 text-center gradient-text-accent">Skills & Technologies</h2>
-            <p className="text-center mb-10 text-gray-600 dark:text-gray-400">Tools and technologies I work with</p>
-          </motion.div>
-          
-          <motion.div 
-            className="flex flex-wrap justify-center gap-3 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">Skills & Expertise</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              I've worked with various technologies across the full stack development spectrum. Here's a breakdown of my technical skills and expertise.
+            </p>
+          </div>
+
+          {/* Category filter */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
             <Button 
-              variant={activeCategory === 'all' ? 'playful' : 'outline'} 
-              size="sm" 
+              variant={activeCategory === 'all' ? 'default' : 'outline'}
               onClick={() => setActiveCategory('all')}
-              className={activeCategory !== 'all' ? 'shadow-glow-primary' : ''}
+              className="min-w-[100px]"
             >
               All
             </Button>
-            <Button 
-              variant={activeCategory === 'frontend' ? 'accent' : 'outline'} 
-              size="sm" 
-              onClick={() => setActiveCategory('frontend')}
-              className={activeCategory !== 'frontend' ? 'shadow-glow-accent' : ''}
-            >
-              Frontend
-            </Button>
-            <Button 
-              variant={activeCategory === 'backend' ? 'tertiary' : 'outline'} 
-              size="sm" 
-              onClick={() => setActiveCategory('backend')}
-              className={activeCategory !== 'backend' ? 'shadow-glow-tertiary' : ''}
-            >
-              Backend
-            </Button>
-            <Button 
-              variant={activeCategory === 'language' ? 'primary' : 'outline'} 
-              size="sm" 
-              onClick={() => setActiveCategory('language')}
-              className={activeCategory !== 'language' ? 'shadow-glow-primary' : ''}
-            >
-              Languages
-            </Button>
-            <Button 
-              variant={activeCategory === 'database' ? 'secondary' : 'outline'} 
-              size="sm" 
-              onClick={() => setActiveCategory('database')}
-              className={activeCategory !== 'database' ? 'shadow-glow-secondary' : ''}
-            >
-              Databases
-            </Button>
-            <Button 
-              variant={activeCategory === 'devops' ? 'tertiary' : 'outline'} 
-              size="sm" 
-              onClick={() => setActiveCategory('devops')}
-              className={activeCategory !== 'devops' ? 'shadow-glow-tertiary' : ''}
-            >
-              DevOps
-            </Button>
-            <Button 
-              variant={activeCategory === 'design' ? 'accent' : 'outline'} 
-              size="sm" 
-              onClick={() => setActiveCategory('design')}
-              className={activeCategory !== 'design' ? 'shadow-glow-accent' : ''}
-            >
-              Design
-            </Button>
-          </motion.div>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {filteredSkills.map((skill) => (
-              <motion.div 
-                key={skill.name} 
-                className={`bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md ${cardHoverEffects} border border-gray-200 dark:border-gray-700`}
-                variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.03,
-                  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                }}
+            {Array.from(new Set(skills.map(skill => skill.category))).map(category => (
+              <Button 
+                key={category as string} 
+                variant={activeCategory === category ? 'default' : 'outline'}
+                onClick={() => setActiveCategory(category as string)}
+                className="min-w-[100px] capitalize"
               >
-                <h3 className="font-semibold mb-2">{skill.name}</h3>
-                <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                  <motion.div 
-                    className={`h-full rounded-full ${
-                      skill.category === 'frontend' 
-                        ? 'bg-accent-500' 
-                        : skill.category === 'backend' 
-                          ? 'bg-tertiary-500' 
-                          : skill.category === 'design'
-                            ? 'bg-secondary-500'
-                            : skill.category === 'database'
-                              ? 'bg-blue-500'
-                              : skill.category === 'devops'
-                                ? 'bg-orange-500'
-                                : 'bg-primary-500'
-                    }`}
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    transition={{ duration: 1, delay: 0.3 }}
-                    viewport={{ once: true }}
-                  />
-                </div>
-                <div className="mt-1 text-xs text-right text-gray-500">
-                  {skill.level}%
-                </div>
-              </motion.div>
+                {category as string}
+              </Button>
             ))}
-          </motion.div>
+          </div>
+
+          {/* Skills grid */}
+          {isLoading ? (
+            <div className="flex justify-center items-center h-60">
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredSkills.map((skill, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                >
+                  <Card className={`h-full ${cardHoverEffects}`}>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg flex justify-between items-center">
+                        <span>{skill.name}</span>
+                        <span className="text-sm font-normal text-primary-500 dark:text-primary-400">{skill.level}%</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-1">
+                        <div 
+                          className="bg-gradient-to-r from-blue-500 to-cyan-500 h-2.5 rounded-full" 
+                          style={{ width: `${skill.level}%` }}
+                        ></div>
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 capitalize">{skill.category}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </Container>
       </Section>
     </>
   );
-} 
+}
+
+// Default data to use if Firebase data fails to load
+const defaultSkills = [
+  { name: 'React', level: 90, category: 'frontend' },
+  { name: 'Next.js', level: 85, category: 'frontend' },
+  { name: 'TypeScript', level: 80, category: 'language' },
+  { name: 'Node.js', level: 85, category: 'backend' },
+  { name: 'Firebase', level: 80, category: 'backend' },
+  { name: 'Tailwind CSS', level: 90, category: 'frontend' },
+  { name: 'GraphQL', level: 75, category: 'api' },
+  { name: 'MongoDB', level: 70, category: 'database' },
+  { name: 'PostgreSQL', level: 65, category: 'database' },
+  { name: 'AWS', level: 60, category: 'devops' },
+  { name: 'Docker', level: 55, category: 'devops' },
+  { name: 'CI/CD', level: 60, category: 'devops' },
+  { name: 'UI/UX Design', level: 75, category: 'design' },
+  { name: 'Responsive Design', level: 85, category: 'design' },
+  { name: 'Accessibility', level: 70, category: 'design' },
+  { name: 'Performance Optimization', level: 75, category: 'optimization' },
+];
+
+const defaultTimelineData = [
+  {
+    title: "Product Designer",
+    company: "Lowe's",
+    period: "2024-Present",
+    description: "Leading design initiatives for digital products, collaborating with cross-functional teams to create intuitive user experiences.",
+    icon: "briefcase"
+  },
+  {
+    title: "Senior UX Designer",
+    company: "Design Agency",
+    period: "2017-2020",
+    description: "Created user-centered designs for various clients across retail, finance, and healthcare sectors.",
+    icon: "briefcase"
+  },
+  {
+    title: "UX/UI Designer",
+    company: "Tech Solutions Inc.",
+    period: "2015-2017",
+    description: "Designed interfaces for web and mobile applications with a focus on usability and accessibility.",
+    icon: "briefcase"
+  },
+  {
+    title: "Master of Education",
+    company: "University of South Florida",
+    period: "2013-2015",
+    description: "Focused on instructional design and technology integration.",
+    icon: "graduation-cap"
+  }
+]; 

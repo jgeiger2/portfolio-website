@@ -1,56 +1,81 @@
-# Voice Notes App
+# James Geiger Portfolio Website
 
-A real-time voice notes application built with Next.js, Firebase, and Deepgram.
+A modern, elegant portfolio website built with Next.js, React, and Tailwind CSS.
 
 ## Features
 
-- 🎙️ Real-time voice recording and transcription
-- 📝 Instant text transcription using Deepgram AI
-- 🔥 Firebase authentication and data storage
-- 🎨 Clean and modern UI with Tailwind CSS
-- 📱 Responsive design
-- 🔒 Secure user data management
+- Responsive design
+- Blog with Firebase backend
+- Dark/light mode
+- Portfolio project showcase
+- Modern UI components
 
 ## Tech Stack
 
-- Next.js 14 (App Router)
-- TypeScript
-- Firebase (Authentication, Firestore)
-- Deepgram API for voice transcription
-- Tailwind CSS
+- **Frontend**: Next.js 14, React, Tailwind CSS
+- **Backend**: Firebase (Firestore, Storage, Authentication)
+- **Styling**: TailwindCSS with custom components
+- **Deployment**: Vercel
 
 ## Getting Started
 
+### Prerequisites
+
+- Node.js (v18 or newer)
+- npm or yarn
+- Firebase account (for backend functionality)
+
+### Installation
+
 1. Clone the repository
-2. Install dependencies:
+
+   ```bash
+   git clone <repository-url>
+   cd portfolio-website
+   ```
+
+2. Install dependencies
+
    ```bash
    npm install
+   # or
+   yarn install
    ```
-3. Set up environment variables in `.env.local`:
+
+3. Set up environment variables
+   Create a `.env.local` file in the root directory and add your Firebase configuration:
+
    ```
-   NEXT_PUBLIC_FIREBASE_API_KEY=
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-   NEXT_PUBLIC_FIREBASE_APP_ID=
-   DEEPGRAM_API_KEY=
+   NEXT_PUBLIC_FIREBASE_API_KEY=your-api-key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-auth-domain
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
    ```
-4. Run the development server:
+
+4. Start the development server
+
    ```bash
    npm run dev
+   # or
+   yarn dev
    ```
 
-## Usage
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-1. Sign in with your Google account
-2. Click the microphone button to start recording
-3. Speak into your microphone
-4. Click the stop button when finished
-5. Your voice note will be automatically transcribed and saved
-6. View all your notes in the list below
-7. Delete notes using the trash icon
+## Project Structure
+
+- `/src/app` - Next.js app router pages
+- `/src/components` - React components
+- `/src/lib` - Utility functions and libraries
+- `/public` - Static assets
+- `/project-docs` - Project documentation
+
+## Deployment
+
+The website is configured for easy deployment on Vercel.
 
 ## License
 
-MIT
+This project is licensed under the MIT License.

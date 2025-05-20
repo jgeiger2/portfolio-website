@@ -16,6 +16,11 @@
 # misc
 .DS_Store
 *.pem
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # debug
 npm-debug.log*
@@ -23,7 +28,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -32,14 +40,28 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# IDE
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Logs
+logs
+*.log
+
 # Firebase
 firebase-debug.log*
 firebase-debug.*.log*
 .firebase/
-
-# IDE
-.idea/
-.vscode/
 
 # Template directory
 /Riley-and-Ansh-Full-Stack-Nextjs-Template-version-1/ 

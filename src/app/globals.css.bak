@@ -6,12 +6,11 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 240, 249, 255;
   --background-end-rgb: 248, 250, 252;
+
+  /* Playful gradient accents */
   --accent-gradient-1: linear-gradient(135deg, #48c4ff, #8a4eff);
   --accent-gradient-2: linear-gradient(135deg, #36c7bc, #0088ff);
   --accent-gradient-3: linear-gradient(135deg, #ff4365, #7c2dff);
-  --color-primary-500-rgb: 79, 70, 229;
-  --color-accent-500-rgb: 20, 184, 166;
-  --color-tertiary-500-rgb: 249, 115, 22;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -175,4 +174,10 @@ body {
     opacity: 0.8;
     transform: scale(1.1);
   }
+}
+
+:root {
+  --color-primary-500-rgb: 79, 70, 229;
+  --color-accent-500-rgb: 20, 184, 166;
+  --color-tertiary-500-rgb: 249, 115, 22;
 }

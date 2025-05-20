@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/hooks/useAuth";
 import LogoutButton from "@/components/admin/LogoutButton";
+import Link from 'next/link';
 
 export default function AdminDashboard() {
   const { user, loading, isAdmin } = useAuth();
@@ -59,9 +60,19 @@ export default function AdminDashboard() {
           link="/admin/blog"
         />
         <DashboardCard 
+          title="Import Medium Blogs" 
+          description="Import your blogs from Medium to your portfolio"
+          link="/admin/import-medium"
+        />
+        <DashboardCard 
           title="Contact Submissions" 
           description="View and manage contact form submissions"
           link="/admin/contact"
+        />
+        <DashboardCard 
+          title="About Page Content" 
+          description="Edit skills and career timeline sections"
+          link="/admin/about"
         />
       </div>
     </div>
@@ -77,18 +88,15 @@ function DashboardCard({
   description: string;
   link: string;
 }) {
-  const router = useRouter();
-  
   return (
-    <div 
-      className="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 shadow-lg cursor-pointer hover:bg-opacity-20 transition"
-      onClick={() => router.push(link)}
-    >
+    <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 shadow-lg hover:bg-opacity-20 transition">
       <h2 className="text-xl font-semibold mb-2">{title}</h2>
       <p className="text-gray-300 mb-4">{description}</p>
-      <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
-        Manage
-      </button>
+      <Link href={link} prefetch={false}>
+        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+          Manage
+        </button>
+      </Link>
     </div>
   );
 } 

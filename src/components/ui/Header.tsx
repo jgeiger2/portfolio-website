@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Container } from './Container';
 import { Button } from './Button';
+import { useAuth } from '@/lib/hooks/useAuth';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, isAdmin } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -40,6 +42,11 @@ export function Header() {
             <Link href="/contact">
               <Button variant="outline" size="sm" className="shadow-glow-accent">Contact</Button>
             </Link>
+            {user && (
+              <Link href="/admin" className="accent-underline text-foreground hover:text-primary transition duration-200">
+                Dashboard
+              </Link>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -109,6 +116,15 @@ export function Header() {
             >
               <Button variant="outline" size="sm" className="shadow-glow-accent">Contact</Button>
             </Link>
+            {user && (
+              <Link
+                href="/admin"
+                className="text-foreground hover:text-primary transition duration-200 py-2 pl-4 border-l-2 border-primary-500 dark:border-primary-500"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+            )}
           </nav>
         )}
       </Container>

@@ -34,6 +34,30 @@ const nextConfig = {
         protocol: "https",
         hostname: "**.googleusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "**.fbcdn.net",
+      },
+      {
+        protocol: "https",
+        hostname: "miro.medium.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn-images-1.medium.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.medium.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.redd.it",
+      },
+      {
+        protocol: "https",
+        hostname: "**.imgur.com",
+      },
     ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

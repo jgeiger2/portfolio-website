@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "framework": "nextjs",
+  "builds": [
+    { "src": "next.config.js", "use": "@vercel/next" }
+  ],
+  "rewrites": [
+    {
+      "source": "/admin/:path*",
+      "destination": "/admin/:path*"
+    }
+  ],
   "outputDirectory": ".next"
 } 

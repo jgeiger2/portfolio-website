@@ -71,7 +71,7 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "gradient-playful": "linear-gradient(135deg, var(--tw-gradient-stops))",
+        "gradient-playful": "linear-gradient(165deg, var(--tw-gradient-stops))",
       },
       boxShadow: {
         glass: "0 4px 30px rgba(0, 0, 0, 0.1)",
@@ -91,6 +91,8 @@ const config: Config = {
       animation: {
         "float": "float 6s ease-in-out infinite",
         "float-delayed": "float 6s ease-in-out 2s infinite",
+        "float-slow": "float 12s ease-in-out infinite",
+        "float-delayed-slow": "float 12s ease-in-out 3s infinite",
         "bounce-slow": "bounce 3s ease-in-out infinite",
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
