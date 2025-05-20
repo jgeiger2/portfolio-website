@@ -9,6 +9,18 @@ import Image from "next/image";
 
 const QuillWrapper = dynamic(() => import("@/components/QuillWrapper"), { ssr: false });
 
+// Add Project type
+type Project = {
+  id: string;
+  title: string;
+  description?: string;
+  technologies?: string[];
+  order?: number;
+  images?: string[];
+  content?: string | any[];
+  // Add any other fields as needed
+};
+
 export default function EditProjectPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -26,8 +38,8 @@ export default function EditProjectPage() {
   useEffect(() => {
     const fetchProject = async () => {
       setLoading(true);
-      const projects = await getDocuments("projects");
-      const project = projects.find((p: any) => p.id === id);
+      const projects = await getDocuments("projects") as Project[];
+      const project = projects.find((p) => p.id === id);
       if (project) {
         setTitle(project.title || "");
         setDescription(project.description || "");
