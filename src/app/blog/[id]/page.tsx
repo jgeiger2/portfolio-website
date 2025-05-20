@@ -5,7 +5,7 @@ import { fetchBlogs } from '@/lib/firebase/firebaseUtils';
 // Add Blog type
 export type Blog = {
   id: string;
-  title: string;
+  title?: string;
   subtitle?: string;
   body?: string;
   category?: string;
