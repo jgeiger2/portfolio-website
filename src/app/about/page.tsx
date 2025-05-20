@@ -263,7 +263,7 @@ export default function AboutPage() {
           {/* Category filter */}
           <div className="flex flex-wrap justify-center gap-2 mb-10">
             <Button 
-              variant={activeCategory === 'all' ? 'default' : 'outline'}
+              variant={activeCategory === 'all' ? 'primary' : 'outline'}
               onClick={() => setActiveCategory('all')}
               className="min-w-[100px]"
             >
@@ -272,7 +272,7 @@ export default function AboutPage() {
             {Array.from(new Set(skills.map(skill => skill.category))).map(category => (
               <Button 
                 key={category as string} 
-                variant={activeCategory === category ? 'default' : 'outline'}
+                variant={activeCategory === category ? 'primary' : 'outline'}
                 onClick={() => setActiveCategory(category as string)}
                 className="min-w-[100px] capitalize"
               >
