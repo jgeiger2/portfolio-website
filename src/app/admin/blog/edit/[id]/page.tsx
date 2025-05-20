@@ -11,6 +11,17 @@ import React from "react";
 // Replace ReactQuill dynamic import with QuillWrapper
 const QuillWrapper = dynamic(() => import("@/components/QuillWrapper"), { ssr: false });
 
+// Add Blog type
+type Blog = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  body?: string;
+  category?: string;
+  datePublished?: string;
+  // Add any other fields as needed
+};
+
 export default function EditBlogPage() {
   const router = useRouter();
   const params = useParams();
@@ -35,8 +46,8 @@ export default function EditBlogPage() {
   // Fetch blog data
   useEffect(() => {
     setIsLoading(true);
-    fetchBlogs().then(blogs => {
-      const found = blogs.find((b: any) => b.id === id);
+    fetchBlogs().then((blogs: Blog[]) => {
+      const found = blogs.find((b) => b.id === id);
       if (found) {
         setBlog(found);
         setTitle(found.title || "");
