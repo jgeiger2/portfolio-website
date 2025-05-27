@@ -163,9 +163,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <Card 
-                key={project.id} 
-                className="h-full overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2" 
-                variant={index === 0 ? "playful" : index === 1 ? "gradient" : "accent"}
+                key={project.id}
+                className="h-full overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
                 highlight={index === 0}
               >
                 <div className="relative h-48 overflow-hidden">
