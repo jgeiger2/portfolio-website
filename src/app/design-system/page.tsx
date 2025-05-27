@@ -20,21 +20,21 @@ export default function DesignSystemPage() {
         <h2 className="text-2xl font-semibold mb-4">Buttons</h2>
         <div className="space-y-4">
           <div className="flex flex-wrap gap-4">
-            <Button variant="primary">Primary Button</Button>
+            <Button variant="default">Primary Button</Button>
             <Button variant="secondary">Secondary Button</Button>
-            <Button variant="glass">Glass Button</Button>
+            <Button variant="outline">Glass Button</Button>
             <Button variant="outline">Outline Button</Button>
           </div>
           
           <div className="flex flex-wrap gap-4">
-            <Button variant="primary" size="sm">Small Button</Button>
-            <Button variant="primary">Medium Button</Button>
-            <Button variant="primary" size="lg">Large Button</Button>
+            <Button variant="default" size="sm">Small Button</Button>
+            <Button variant="default">Medium Button</Button>
+            <Button variant="default" size="lg">Large Button</Button>
           </div>
           
           <div className="flex flex-wrap gap-4">
-            <Button variant="primary" isLoading>Loading Button</Button>
-            <Button variant="primary" disabled>Disabled Button</Button>
+            <Button variant="default" isLoading>Loading Button</Button>
+            <Button variant="default" disabled>Disabled Button</Button>
           </div>
         </div>
       </section>
@@ -50,7 +50,7 @@ export default function DesignSystemPage() {
               <p>This is a card with glass morphism styling.</p>
             </CardContent>
             <CardFooter>
-              <Button variant="primary" size="sm">Action</Button>
+              <Button variant="default" size="sm">Action</Button>
             </CardFooter>
           </Card>
           
@@ -62,7 +62,7 @@ export default function DesignSystemPage() {
               <p>This is a card with solid styling.</p>
             </CardContent>
             <CardFooter>
-              <Button variant="primary" size="sm">Action</Button>
+              <Button variant="default" size="sm">Action</Button>
             </CardFooter>
           </Card>
         </div>
