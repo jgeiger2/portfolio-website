@@ -92,13 +92,10 @@ export default function DesignSystemPage() {
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mb-4">Badges</h2>
         <div className="flex flex-wrap gap-3">
-          <Badge variant="primary">Primary</Badge>
+          <Badge variant="default">Primary</Badge>
           <Badge variant="secondary">Secondary</Badge>
-          <Badge variant="success">Success</Badge>
-          <Badge variant="danger">Danger</Badge>
-          <Badge variant="warning">Warning</Badge>
-          <Badge variant="info">Info</Badge>
-          <Badge variant="glass">Glass</Badge>
+          <Badge variant="destructive">Destructive</Badge>
+          <Badge variant="outline">Outline</Badge>
         </div>
       </section>
     </Container>
