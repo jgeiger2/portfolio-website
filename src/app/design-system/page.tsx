@@ -77,7 +77,6 @@ export default function DesignSystemPage() {
           
           <Input 
             placeholder="Enter some text" 
-            variant="glass"
           />
           
           <Input 
