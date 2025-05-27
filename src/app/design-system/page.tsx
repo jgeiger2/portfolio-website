@@ -54,7 +54,7 @@ export default function DesignSystemPage() {
             </CardFooter>
           </Card>
           
-          <Card variant="solid">
+          <Card>
             <CardHeader>
               <CardTitle>Solid Card</CardTitle>
             </CardHeader>
