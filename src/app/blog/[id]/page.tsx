@@ -18,22 +18,22 @@ export type Blog = {
 };
 
 // Generate metadata for the blog post page
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const blogs: Blog[] = await fetchBlogs();
-  const blog = blogs.find(blog => blog.id === params.id);
-  
-  if (!blog) {
-    return {
-      title: 'Blog Post Not Found',
-      description: 'The requested blog post could not be found.',
-    };
-  }
-
-  return {
-    title: `${blog.title} | James Geiger's Blog`,
-    description: blog.body ? blog.body.replace(/<[^>]*>/g, '').substring(0, 160) : '',
-  };
-}
+// export async function generateMetadata({ params }: { params: { id: string } }) {
+//   const blogs: Blog[] = await fetchBlogs();
+//   const blog = blogs.find(blog => blog.id === params.id);
+//   
+//   if (!blog) {
+//     return {
+//       title: 'Blog Post Not Found',
+//       description: 'The requested blog post could not be found.',
+//     };
+//   }
+//
+//   return {
+//     title: `${blog.title} | James Geiger's Blog`,
+//     description: blog.body ? blog.body.replace(/<[^>]*>/g, '').substring(0, 160) : '',
+//   };
+// }
 
 // Page configuration for Next.js 15
 export const dynamic = 'force-dynamic';
