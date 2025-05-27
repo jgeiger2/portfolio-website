@@ -147,7 +147,6 @@ export default async function BlogPage() {
                   >
                     <Card 
                       className="flex flex-col h-full overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group"
-                      variant={index % 3 === 0 ? "playful" : index % 3 === 1 ? "gradient" : "accent"}
                     >
                       <div className="relative w-full h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900 dark:to-secondary-900 group-hover:scale-[1.02] transition-transform duration-500">
                         {imageUrl && isValidImageUrl(imageUrl) ? (
