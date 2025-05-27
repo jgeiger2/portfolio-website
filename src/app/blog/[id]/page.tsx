@@ -41,7 +41,7 @@ export const preferredRegion = 'auto';
 export const revalidate = 0;
 export const fetchCache = 'auto';
 
-export default function BlogPostPage({ params, searchParams }: { params: { id: string }, searchParams?: { [key: string]: string | string[] | undefined } }) {
+export default function Page({ params }: { params: { id: string } }) {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
