@@ -72,24 +72,20 @@ export default function DesignSystemPage() {
         <h2 className="text-2xl font-semibold mb-4">Inputs</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input 
-            label="Standard Input" 
             placeholder="Enter some text" 
           />
           
           <Input 
-            label="Glass Input" 
             placeholder="Enter some text" 
             variant="glass"
           />
           
           <Input 
-            label="Input with Error" 
             placeholder="Enter some text"
             error="This field is required"
           />
           
           <Input 
-            label="Input with Icon" 
             placeholder="Search..." 
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
