@@ -1,3 +1,7 @@
+'use client';
+
+import React from 'react';
+import Image from 'next/image';
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Mockup } from "@/components/ui/mockup"
@@ -41,103 +45,66 @@ export function HeroWithMockup({
   className,
 }: HeroWithMockupProps) {
   return (
-    <section
-      className={cn(
-        "relative bg-background text-foreground",
-        "py-12 px-4 md:py-24 lg:py-32",
-        "overflow-hidden",
-        className,
-      )}
-    >
-      <div className="relative mx-auto max-w-[1280px] flex flex-col gap-12 lg:gap-24">
-        <div className="relative z-10 flex flex-col items-center gap-6 pt-8 md:pt-16 text-center lg:gap-12">
-          {/* Heading */}
-          <h1
-            className={cn(
-              "inline-block animate-appear",
-              "bg-gradient-to-b from-foreground via-foreground/90 to-muted-foreground",
-              "bg-clip-text text-transparent",
-              "text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl",
-              "leading-[1.1] sm:leading-[1.1]",
-              "drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]",
-            )}
-          >
-            {title}
-          </h1>
-
-          {/* Description */}
-          <p
-            className={cn(
-              "max-w-[550px] animate-appear opacity-0 [animation-delay:150ms]",
-              "text-base sm:text-lg md:text-xl",
-              "text-muted-foreground",
-              "font-medium",
-            )}
-          >
-            {description}
-          </p>
-
-          {/* CTAs */}
-          <div
-            className="relative z-10 flex flex-wrap justify-center gap-4 
-            animate-appear opacity-0 [animation-delay:300ms]"
-          >
-            <Button
-              asChild
-              size="lg"
-              className={cn(
-                "bg-gradient-to-b from-brand to-brand/90 dark:from-brand/90 dark:to-brand/80",
-                "hover:from-brand/95 hover:to-brand/85 dark:hover:from-brand/80 dark:hover:to-brand/70",
-                "text-white shadow-lg",
-                "transition-all duration-300",
-              )}
-            >
-              <a href={primaryCta.href}>{primaryCta.text}</a>
-            </Button>
-
-            <Button
-              asChild
-              size="lg"
-              variant="ghost"
-              className={cn(
-                "text-foreground/80 dark:text-foreground/70",
-                "transition-all duration-300",
-              )}
-            >
-              <a href={secondaryCta.href}>
-                {secondaryCta.icon}
-                {secondaryCta.text}
-              </a>
-            </Button>
-          </div>
-
-          {/* Mockup */}
-          <div className="relative w-full pt-12 px-4 sm:px-6 lg:px-8">
-            <Mockup
-              className={cn(
-                "animate-appear opacity-0 [animation-delay:700ms]",
-                "shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_0_50px_-12px_rgba(255,255,255,0.1)]",
-                "border-brand/10 dark:border-brand/5",
-              )}
-            >
-              <img
-                {...mockupImage}
-                className="w-full h-auto"
-                loading="lazy"
-                decoding="async"
-              />
-            </Mockup>
-          </div>
+    <div className="relative overflow-hidden bg-gradient-to-b from-primary-100 via-background-light to-secondary-100 dark:from-primary-950 dark:via-background-dark dark:to-secondary-950">
+      <div className="max-w-7xl mx-auto">
+        <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+          <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+            <div className="sm:text-center lg:text-left">
+              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
+                <span className="block xl:inline">{title}</span>{' '}
+                <span className="block text-primary-600 dark:text-primary-500 xl:inline">{description}</span>
+              </h1>
+              <p className="mt-3 text-base text-gray-500 dark:text-gray-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                {description}
+              </p>
+              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                <div className="rounded-md shadow">
+                  <Button
+                    asChild
+                    size="lg"
+                    className={cn(
+                      "bg-gradient-to-b from-brand to-brand/90 dark:from-brand/90 dark:to-brand/80",
+                      "hover:from-brand/95 hover:to-brand/85 dark:hover:from-brand/80 dark:hover:to-brand/70",
+                      "text-white shadow-lg",
+                      "transition-all duration-300",
+                    )}
+                  >
+                    <a href={primaryCta.href}>{primaryCta.text}</a>
+                  </Button>
+                </div>
+                <div className="mt-3 sm:mt-0 sm:ml-3">
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="ghost"
+                    className={cn(
+                      "text-foreground/80 dark:text-foreground/70",
+                      "transition-all duration-300",
+                    )}
+                  >
+                    <a href={secondaryCta.href}>
+                      {secondaryCta.icon}
+                      {secondaryCta.text}
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </main>
         </div>
       </div>
-
-      {/* Background Glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <Glow
-          variant="above"
-          className="animate-appear-zoom opacity-0 [animation-delay:1000ms]"
-        />
+      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+        <div className="relative h-56 sm:h-72 md:h-96 lg:h-full">
+          <Image
+            src={mockupImage.src}
+            alt={mockupImage.alt}
+            fill
+            className="object-contain"
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+          />
+        </div>
       </div>
-    </section>
+    </div>
   )
 }
