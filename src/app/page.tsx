@@ -188,7 +188,7 @@ export default function Home() {
                   </div>
                 </div>
                 <CardHeader>
-                  <CardTitle gradient={index === 1}>{project.title}</CardTitle>
+                  <CardTitle className={index === 1 ? "gradient-text" : ""}>{project.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="mb-4">{project.description}</p>
