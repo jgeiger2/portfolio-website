@@ -41,12 +41,6 @@ export const preferredRegion = 'auto';
 export const revalidate = 0;
 export const fetchCache = 'auto';
 
-// This type helps TypeScript understand the shape of the page's props
-export interface PageProps {
-  params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
 export default function BlogPostPage({ params, searchParams }: { params: { id: string }, searchParams?: { [key: string]: string | string[] | undefined } }) {
   return (
     <div>
