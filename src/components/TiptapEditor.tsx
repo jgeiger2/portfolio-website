@@ -48,9 +48,7 @@ const TiptapEditor = forwardRef<Editor, TiptapEditorProps>(({
       Image.configure({
         HTMLAttributes: {
           class: 'rounded-lg max-w-full h-auto',
-        },
-        renderHTML({ HTMLAttributes }) {
-          return ['img', { ...HTMLAttributes, loading: 'lazy' }];
+          loading: 'lazy',
         },
       }),
       Placeholder.configure({
@@ -67,7 +65,6 @@ const TiptapEditor = forwardRef<Editor, TiptapEditorProps>(({
 
   useEffect(() => {
     if (ref && editor) {
-      // @ts-expect-error - Tiptap's type system doesn't handle refs well
       if (typeof ref === 'function') {
         ref(editor);
       } else {

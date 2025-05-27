@@ -95,7 +95,14 @@ export default function TimelineEditor() {
   const handleSaveTimeline = async () => {
     try {
       setIsSaving(true);
-      await updateTimeline(timeline);
+      await updateTimeline(
+        timeline.map(item => ({
+          company: item.company,
+          position: item.title,
+          duration: item.period,
+          description: item.description,
+        }))
+      );
       router.push("/admin/about");
     } catch (error) {
       console.error("Error saving timeline:", error);

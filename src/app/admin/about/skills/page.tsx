@@ -48,7 +48,11 @@ export default function SkillsEditor() {
       try {
         setIsLoading(true);
         const data = await fetchSkills();
-        setSkills(data);
+        setSkills(data.map((name) => ({
+          name,
+          level: 75, // default value
+          category: "frontend", // default value
+        })));
       } catch (error) {
         console.error("Error loading skills:", error);
       } finally {
@@ -103,7 +107,7 @@ export default function SkillsEditor() {
   const handleSaveSkills = async () => {
     try {
       setIsSaving(true);
-      await updateSkills(skills);
+      await updateSkills(skills.map(skill => skill.name));
       router.push("/admin/about");
     } catch (error) {
       console.error("Error saving skills:", error);

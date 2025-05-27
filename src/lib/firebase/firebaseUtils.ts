@@ -44,11 +44,11 @@ export const getDocuments = async <T extends DocumentData>(collectionName: strin
   return querySnapshot.docs.map(doc => ({
     id: doc.id,
     ...doc.data()
-  })) as T[];
+  })) as unknown as T[];
 };
 
-export const updateDocument = <T extends DocumentData>(collectionName: string, id: string, data: Partial<T>) =>
-  updateDoc(doc(db, collectionName, id), data);
+export const updateDocument = <T extends DocumentData>(collectionName: string, id: string, data: any) =>
+  updateDoc(doc(db, collectionName, id) as any, data);
 
 export const deleteDocument = (collectionName: string, id: string) =>
   deleteDoc(doc(db, collectionName, id));
