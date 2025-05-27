@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Mockup } from "@/components/ui/mockup"
 import { Glow } from "@/components/ui/glow"
+import { Github } from "lucide-react";
 
 interface HeroWithMockupProps {
   title: string
@@ -34,7 +35,7 @@ export function HeroWithMockup({
   secondaryCta = {
     text: "GitHub",
     href: "https://github.com/your-repo",
-    icon: <GitHubIcon className="mr-2 h-4 w-4" />,
+    icon: <Github className="mr-2 h-4 w-4" />,
   },
   mockupImage,
   className,
