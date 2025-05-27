@@ -165,7 +165,6 @@ export default function Home() {
               <Card 
                 key={project.id}
                 className="h-full overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-                highlight={index === 0}
               >
                 <div className="relative h-48 overflow-hidden">
                   {/* This is a placeholder - in a real implementation, we'd have actual project images */}
