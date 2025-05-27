@@ -1,11 +1,15 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { Switch } from "@/components/ui/switch";
+import { useTheme } from "@/components/ThemeProvider";
+import { Icons } from "@/components/ui/icons";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [headerShapeClass, setHeaderShapeClass] = useState('rounded-full');
   const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { theme, setTheme } = useTheme();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -68,7 +72,7 @@ export function Navbar() {
                        flex flex-col items-center
                        pl-6 pr-6 py-3 backdrop-blur-sm
                        ${headerShapeClass}
-                       border border-[#333] bg-[#1f1f1f57]
+                       border border-[#333] bg-background/80
                        w-[calc(100%-2rem)] sm:w-auto
                        transition-[border-radius] duration-0 ease-in-out`}>
 
@@ -92,6 +96,18 @@ export function Navbar() {
         <div className="hidden sm:flex items-center gap-2 sm:gap-3">
           {loginButtonElement}
           {signupButtonElement}
+          <button
+            className="flex items-center justify-center ml-2 p-1 rounded-full border border-transparent hover:border-gray-400 transition-colors bg-background/70"
+            aria-label="Toggle dark mode"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            type="button"
+          >
+            {theme === "dark" ? (
+              <Icons.sun className="w-5 h-5 text-yellow-400" />
+            ) : (
+              <Icons.moon className="w-5 h-5 text-gray-700" />
+            )}
+          </button>
         </div>
 
         <button className="sm:hidden flex items-center justify-center w-8 h-8 text-gray-300 focus:outline-none" onClick={toggleMenu} aria-label={isOpen ? 'Close Menu' : 'Open Menu'}>
@@ -115,6 +131,18 @@ export function Navbar() {
         <div className="flex flex-col items-center space-y-4 mt-4 w-full">
           {loginButtonElement}
           {signupButtonElement}
+          <button
+            className="flex items-center justify-center mt-2 p-1 rounded-full border border-transparent hover:border-gray-400 transition-colors bg-background/70"
+            aria-label="Toggle dark mode"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            type="button"
+          >
+            {theme === "dark" ? (
+              <Icons.sun className="w-5 h-5 text-yellow-400" />
+            ) : (
+              <Icons.moon className="w-5 h-5 text-gray-700" />
+            )}
+          </button>
         </div>
       </div>
     </header>
