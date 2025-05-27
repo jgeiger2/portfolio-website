@@ -179,10 +179,10 @@ export default function Home() {
                   <div className="absolute bottom-0 left-0 p-2">
                     {project.technologies.map(tech => (
                       <Badge key={tech} className="mr-1 mb-1" variant={
-                        tech.includes('React') || tech.includes('Next') ? 'primary' : 
+                        tech.includes('React') || tech.includes('Next') ? 'default' : 
                         tech.includes('Node') ? 'secondary' :
-                        tech.includes('Firebase') ? 'warning' :
-                        'info'
+                        tech.includes('Firebase') ? 'destructive' :
+                        'outline'
                       }>{tech}</Badge>
                     ))}
                   </div>
@@ -224,7 +224,7 @@ export default function Home() {
               <Card key={post.id} className="h-full glass-effect hover:shadow-lg transition-all duration-300 hover:-translate-y-1" variant="glass">
                 <CardHeader className="border-b border-gray-200 dark:border-gray-700">
                   <div className="flex justify-between items-center mb-2">
-                    <Badge variant={index === 0 ? "primary" : index === 1 ? "secondary" : "info"}>
+                    <Badge variant={index === 0 ? "default" : index === 1 ? "secondary" : "outline"}>
                       {post.readTime}
                     </Badge>
                     <span className="text-sm text-gray-500">{post.date}</span>
