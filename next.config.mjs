@@ -36,7 +36,15 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "scontent-atl3-2.xx.fbcdn.net",
+      },
+      {
+        protocol: "https",
         hostname: "**.fbcdn.net",
+      },
+      {
+        protocol: "https",
+        hostname: "*.fbcdn.net",
       },
       {
         protocol: "https",
@@ -57,6 +65,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "**.imgur.com",
+      },
+      {
+        protocol: "https",
+        hostname: "scontent-atl3-2.xx.fbcdn.net",
       },
     ],
     dangerouslyAllowSVG: true,

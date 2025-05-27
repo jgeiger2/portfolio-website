@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { Container } from './Container';
 import { Button } from './Button';
 import { useAuth } from '@/lib/hooks/useAuth';
+import { useTheme } from '@/components/ThemeProvider';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, isAdmin } = useAuth();
+  const { theme, setTheme } = useTheme();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -68,6 +70,14 @@ export function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
+          </button>
+
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="ml-4 p-2 rounded focus:outline-none border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 transition-colors"
+            aria-label="Toggle dark mode"
+          >
+            {theme === 'dark' ? '🌙' : '☀️'}
           </button>
         </div>
 

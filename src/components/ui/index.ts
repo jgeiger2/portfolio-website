@@ -1,9 +1,9 @@
 // Named exports of UI components instead of star exports
-export { default as Button } from './Button';
-export { default as Card } from './Card';
+export { Button, buttonVariants } from './Button';
+export { Card } from './Card';
 export { default as Container } from './Container';
-export { default as Badge } from './Badge';
-export { default as Input } from './Input';
+export { Badge, badgeVariants } from './Badge';
+export { Input } from './Input';
 export { default as Section } from './Section';
 export { Header } from './Header';
 export { Footer } from './Footer';
@@ -15,4 +15,5 @@ export { CardFooter } from './Card';
 export { CardTitle } from './Card';
 export { CardDescription } from './Card';
 export { CardContent } from './Card';
-export { CardActions } from './Card'; 
+
+export { Navbar } from "./mini-navbar"; 

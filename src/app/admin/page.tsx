@@ -60,11 +60,6 @@ export default function AdminDashboard() {
           link="/admin/blog"
         />
         <DashboardCard 
-          title="Import Medium Blogs" 
-          description="Import your blogs from Medium to your portfolio"
-          link="/admin/import-medium"
-        />
-        <DashboardCard 
           title="Contact Submissions" 
           description="View and manage contact form submissions"
           link="/admin/contact"
@@ -99,4 +94,4 @@ function DashboardCard({
       </Link>
     </div>
   );
-} 
+}

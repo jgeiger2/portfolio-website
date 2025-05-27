@@ -96,6 +96,19 @@ const blogPosts = [
   }
 ];
 
+// Utility to render each letter with a glow
+function GlowText({ text }: { text: string }) {
+  return (
+    <span>
+      {text.split("").map((char, i) => (
+        <span key={i} className="gradient-text shadow-glow-primary inline-block">
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -117,14 +130,14 @@ export default function Home() {
               </div>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-10 gradient-text animate-float text-center leading-loose pb-2">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-10 text-transparent gradient-text-shadow animate-float text-center leading-loose pb-2 border-none">
               James Geiger
             </h1>
             <div className="text-xl md:text-3xl mb-8 h-12 text-center">
               <TypingEffect text="Product Designer crafting accessible,  digital experiences" speed={80} />
             </div>
             <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-gray-700 dark:text-gray-300 text-center">
-            Product designer obsessed with accessibility, rapid prototyping, and AI‑driven innovation.Partnering with teams to turn bold ideas into inclusive, responsive experiences—fast.Let’s build digital products that empower every user and push what’s possible.
+            Product designer obsessed with accessibility, rapid prototyping, and AI‑driven innovation.Partnering with teams to turn bold ideas into inclusive, responsive experiences—fast.Let's build digital products that empower every user and push what's possible.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button variant="outline" size="lg" asChild className="shadow-glow-primary">

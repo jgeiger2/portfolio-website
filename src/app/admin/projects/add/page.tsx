@@ -1,230 +1,220 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
-import { addDocument } from "@/lib/firebase/firebaseUtils";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { addDocument } from "@/lib/firebase/firebaseUtils";
 import dynamic from "next/dynamic";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "@/lib/firebase/firebase";
 import Image from "next/image";
 
-const QuillWrapper = dynamic(() => import("@/components/QuillWrapper"), { ssr: false });
+const TiptapEditor = dynamic(() => import("@/components/TiptapEditor"), {
+  ssr: false,
+  loading: () => <div className="h-[500px] bg-gray-800 rounded-md animate-pulse" />
+});
+
+interface ProjectData {
+  title: string;
+  description?: string;
+  technologies: string[];
+  order: number;
+  images: string[];
+  content: string;
+}
 
 export default function AddProjectPage() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [technologies, setTechnologies] = useState("");
-  const [order, setOrder] = useState(1);
-  const [image, setImage] = useState("");
-  const [uploadingImage, setUploadingImage] = useState(false);
-  const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const router = useRouter();
+  const [formData, setFormData] = useState<ProjectData>({
+    title: '',
+    description: '',
+    technologies: [],
+    order: 0,
+    images: [],
+    content: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [techInput, setTechInput] = useState("");
+
+  const handleAddTech = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (techInput) {
+      setFormData(prev => ({
+        ...prev,
+        technologies: [...prev.technologies, techInput],
+      }));
+      setTechInput("");
+    }
+  };
+
+  const handleRemoveTech = (tech: string) => {
+    setFormData(prev => ({
+      ...prev,
+      technologies: prev.technologies.filter(t => t !== tech),
+    }));
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    
-    setUploadingImage(true);
+    if (!e.target.files?.length) return;
+    const file = e.target.files[0];
+
     try {
-      const storageRef = ref(storage, `project-main-images/${Date.now()}-${file.name}`);
+      const storageRef = ref(storage, `project-images/${Date.now()}-${file.name}`);
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
-      setImage(downloadURL);
+
+      setFormData(prev => ({
+        ...prev,
+        images: [...prev.images, downloadURL],
+      }));
     } catch (error) {
       console.error("Error uploading image:", error);
-      alert("Failed to upload image");
     }
-    setUploadingImage(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-    try {
-      await addDocument("projects", {
-        title,
-        description,
-        technologies: technologies.split(",").map(t => t.trim()),
-        images: image ? [image] : [],
-        order: Number(order),
-        content, // Now storing HTML content
-      });
-      setMessage("Project added!");
-      setTitle("");
-      setDescription("");
-      setTechnologies("");
-      setOrder(1);
-      setImage("");
-      setContent("");
-      setTimeout(() => router.push("/admin/projects"), 1000);
-    } catch (err) {
-      setMessage("Error adding project");
-    }
-    setLoading(false);
+  const handleContentImageUpload = async (file: File): Promise<string> => {
+    const storageRef = ref(storage, `project-images/${Date.now()}-${file.name}`);
+    await uploadBytes(storageRef, file);
+    return getDownloadURL(storageRef);
   };
 
-  // Function to handle image upload
-  const imageHandler = () => {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
-    
-    input.onchange = async () => {
-      if (!input.files) return;
-      const file = input.files[0];
-      
-      try {
-        // Use the Firebase storage directly
-        const storageRef = ref(storage, `project-images/${Date.now()}-${file.name}`);
-        await uploadBytes(storageRef, file);
-        
-        // Get the URL of the uploaded image
-        const downloadURL = await getDownloadURL(storageRef);
-        
-        // Insert image into editor
-        const quill = quillRef.current?.getEditor();
-        const range = quill?.getSelection();
-        if (quill && range) {
-          quill.insertEmbed(range.index, 'image', downloadURL);
-        }
-      } catch (error) {
-        console.error("Error uploading image: ", error);
-      }
-    };
+  const handleRemoveImage = (imageUrl: string) => {
+    setFormData(prev => ({
+      ...prev,
+      images: prev.images.filter(img => img !== imageUrl),
+    }));
   };
-
-  // Configure Quill modules
-  const quillRef = React.useRef<any>(null);
-  const modules = useMemo(() => ({
-    toolbar: {
-      container: [
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        ['link', 'image'],
-        ['clean']
-      ],
-      handlers: {
-        image: imageHandler
-      }
-    }
-  }), []);
 
   return (
-    <div className="max-w-xl mx-auto py-10">
+    <div className="max-w-4xl mx-auto py-10">
       <h1 className="text-2xl font-bold mb-6">Add New Project</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" required className="w-full p-2 rounded bg-gray-800 text-white" />
-        <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="Description" required className="w-full p-2 rounded bg-gray-800 text-white" />
-        <input value={technologies} onChange={e => setTechnologies(e.target.value)} placeholder="Technologies (comma separated)" required className="w-full p-2 rounded bg-gray-800 text-white" />
-        <input value={order} onChange={e => setOrder(Number(e.target.value))} type="number" placeholder="Order" required className="w-full p-2 rounded bg-gray-800 text-white" />
-        
-        <div>
-          <label className="block mb-2 text-sm font-medium">Main Image</label>
-          <div className="flex flex-col gap-3">
-            {image && (
-              <div className="relative w-full h-40 bg-gray-800 rounded overflow-hidden">
-                <Image 
-                  src={image} 
-                  alt="Project main image" 
-                  fill 
-                  style={{ objectFit: 'contain' }} 
-                  className="p-2"
-                />
-              </div>
-            )}
-            <div className="flex items-center gap-3">
-              <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
-                {uploadingImage ? "Uploading..." : "Upload Image"}
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  onChange={handleImageUpload} 
-                  className="hidden" 
-                  disabled={uploadingImage}
-                />
-              </label>
-              {image && (
-                <button 
-                  type="button" 
-                  onClick={() => setImage("")} 
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md"
-                >
-                  Remove
-                </button>
-              )}
-            </div>
+      <form onSubmit={async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+          await addDocument('projects', formData);
+          router.push('/admin');
+        } catch (err) {
+          console.error("Error adding project:", err);
+        }
+        setLoading(false);
+      }}>
+        <div className="space-y-6">
+          <div>
+            <label className="text-lg font-semibold mb-2 block">Title</label>
+            <input
+              type="text"
+              value={formData.title}
+              onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
+              className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-blue-500"
+              required
+            />
           </div>
-        </div>
-        
-        <div className="mt-4">
-          <h3 className="text-lg font-semibold mb-2">Project Body</h3>
-          <div style={{ background: "#232b3a", borderRadius: 4, marginBottom: 50 }}>
-            <QuillWrapper
-              ref={el => { quillRef.current = el; }}
-              value={content}
-              onChange={setContent}
-              theme="snow"
-              modules={modules}
-              style={{ height: 300, color: "#fff", background: "#232b3a", borderRadius: 4 }}
+          
+          <div>
+            <label className="text-lg font-semibold mb-2 block">Description</label>
+            <textarea
+              value={formData.description}
+              onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-blue-500 h-24"
+            />
+          </div>
+
+          <div>
+            <label className="text-lg font-semibold mb-2 block">Technologies</label>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {formData.technologies.map(tech => (
+                <div key={tech} className="bg-gray-800 px-3 py-1 rounded-md flex items-center">
+                  <span>{tech}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveTech(tech)}
+                    className="ml-2 text-red-500 hover:text-red-600"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+            <form onSubmit={handleAddTech} className="flex gap-2">
+              <input
+                type="text"
+                value={techInput}
+                onChange={e => setTechInput(e.target.value)}
+                placeholder="Add technology..."
+                className="flex-1 p-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-blue-500"
+              />
+              <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+              >
+                Add
+              </button>
+            </form>
+          </div>
+
+          <div>
+            <label className="text-lg font-semibold mb-2 block">Project Images</label>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+              {formData.images.map((imageUrl, index) => (
+                <div key={index} className="relative">
+                  <Image
+                    src={imageUrl}
+                    alt={`Project image ${index + 1}`}
+                    width={200}
+                    height={150}
+                    className="rounded-lg object-cover w-full h-40"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(imageUrl)}
+                    className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="block w-full text-sm text-gray-400
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-md file:border-0
+                file:text-sm file:font-semibold
+                file:bg-blue-600 file:text-white
+                hover:file:bg-blue-700"
+            />
+          </div>
+          
+          <div>
+            <label className="text-lg font-semibold mb-2 block">Project Content</label>
+            <TiptapEditor
+              content={formData.content}
+              onChange={content => setFormData(prev => ({ ...prev, content }))}
+              onImageUpload={handleContentImageUpload}
+              placeholder="Write about your project..."
+            />
+          </div>
+
+          <div>
+            <label className="text-lg font-semibold mb-2 block">Order</label>
+            <input
+              type="number"
+              value={formData.order}
+              onChange={e => setFormData(prev => ({ ...prev, order: parseInt(e.target.value) }))}
+              className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
         </div>
         
-        <button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition mt-10">
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition mt-10"
+        >
           {loading ? "Adding..." : "Add Project"}
         </button>
-        {message && <div className="mt-2 text-center">{message}</div>}
       </form>
-      
-      <style jsx global>{`
-        .ql-toolbar {
-          background: #232b3a !important;
-          border: 1px solid #333 !important;
-        }
-        .ql-toolbar .ql-stroke {
-          stroke: #fff !important;
-        }
-        .ql-toolbar .ql-fill {
-          fill: #fff !important;
-        }
-        .ql-toolbar .ql-picker {
-          color: #fff !important;
-        }
-        .ql-toolbar .ql-picker-label {
-          color: #fff !important;
-        }
-        .ql-toolbar .ql-picker-options {
-          background: #232b3a !important;
-          color: #fff !important;
-        }
-        .ql-container {
-          background: #232b3a !important;
-          color: #fff !important;
-          border: 1px solid #333 !important;
-          resize: none !important;
-          height: 300px !important;
-          min-height: 300px !important;
-          margin-bottom: 30px !important;
-        }
-        .ql-editor {
-          color: #fff !important;
-          min-height: 250px !important;
-          height: 250px !important;
-          overflow-y: auto !important;
-        }
-        /* Fix spacing between quill and button */
-        form .ql-container {
-          margin-bottom: 40px !important;
-        }
-        /* Make date picker icon white */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-          filter: invert(1);
-        }
-      `}</style>
     </div>
   );
-} 
+}
