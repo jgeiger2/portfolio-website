@@ -1,3 +1,19 @@
+export interface Blog {
+  id: string;
+  title?: string;
+  subtitle?: string;
+  content?: string;
+  body?: string;
+  category?: string;
+  datePublished?: string;
+  featuredImage?: string;
+  categories?: string[];
+  importedFromMedium?: boolean;
+  originalLink?: string;
+  excerpt?: string;
+  author?: string;
+}
+
 export interface BlogPost {
   id: string;
   title: string;

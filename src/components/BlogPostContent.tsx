@@ -2,23 +2,23 @@
 
 import { use } from 'react';
 import { fetchBlogs, Blog } from '@/lib/firebase/firebaseUtils';
+import { Blog as BlogType } from '@/types';
 
-export default function BlogPostContent({ id }: { id: string }) {
-  const blogs = use(fetchBlogs());
-  
-  // Debug logs
-  console.log("Looking for blog with ID:", id);
-  console.log("All blog IDs:", blogs.map(blog => blog.id));
+export default async function BlogPostContent({ id }: { id: string }) {
+  const blogs = await fetchBlogs();
+  const blog = blogs.find(blog => blog.id === id);
 
-  const blog = blogs.find((b: Blog) => b.id === id);
   if (!blog) {
-    throw new Error('Blog post not found');
+    return <div>Blog post not found</div>;
   }
+
+  // Use content if available, otherwise fall back to body
+  const postContent = blog.content || blog.body || '';
 
   return (
     <article>
       <h1>{blog.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+      <div dangerouslySetInnerHTML={{ __html: postContent }} />
     </article>
   );
 }
