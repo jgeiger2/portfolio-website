@@ -33,7 +33,7 @@ export default function DesignSystemPage() {
           </div>
           
           <div className="flex flex-wrap gap-4">
-            <Button variant="default" isLoading>Loading Button</Button>
+            <Button variant="default">Loading Button</Button>
             <Button variant="default" disabled>Disabled Button</Button>
           </div>
         </div>
