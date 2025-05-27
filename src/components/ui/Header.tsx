@@ -1,13 +1,19 @@
 "use client";
 
+import React from 'react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Container } from './Container';
-import { Button } from './Button';
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { useTheme } from '@/components/ThemeProvider';
+import { cn } from '@/lib/utils';
 
-export function Header() {
+interface HeaderProps {
+  className?: string;
+}
+
+export function Header({ className }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, isAdmin } = useAuth();
   const { theme, setTheme } = useTheme();
@@ -17,7 +23,7 @@ export function Header() {
   };
 
   return (
-    <header className="py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 border-b border-border">
+    <header className={cn('py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 border-b border-border', className)}>
       <Container>
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold gradient-text hover:scale-105 transition-transform duration-200">
