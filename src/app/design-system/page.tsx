@@ -81,7 +81,6 @@ export default function DesignSystemPage() {
           
           <Input 
             placeholder="Enter some text"
-            error="This field is required"
           />
           
           <Input 
