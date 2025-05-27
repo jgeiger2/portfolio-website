@@ -47,7 +47,7 @@ export interface PageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default function BlogPostPage({ params }: PageProps) {
+export default function BlogPostPage({ params, searchParams }: { params: { id: string }, searchParams?: { [key: string]: string | string[] | undefined } }) {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
