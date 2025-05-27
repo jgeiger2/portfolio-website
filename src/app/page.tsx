@@ -221,7 +221,10 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogPosts.map((post, index) => (
-              <Card key={post.id} className="h-full glass-effect hover:shadow-lg transition-all duration-300 hover:-translate-y-1" variant="glass">
+              <Card 
+                key={post.id} 
+                className="h-full glass-effect hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card/50 backdrop-blur-sm border-opacity-50"
+              >
                 <CardHeader className="border-b border-gray-200 dark:border-gray-700">
                   <div className="flex justify-between items-center mb-2">
                     <Badge variant={index === 0 ? "default" : index === 1 ? "secondary" : "outline"}>
