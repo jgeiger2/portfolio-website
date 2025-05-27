@@ -17,6 +17,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { BlogPost, Project, AboutData } from '@/types';
 
 // Auth functions
 export const logoutUser = () => signOut(auth);
@@ -354,4 +355,16 @@ export const initializeAboutData = async () => {
       error
     };
   }
+};
+
+export const updateBlogPost = async (id: string, data: Partial<BlogPost>): Promise<void> => {
+  // ... existing code ...
+};
+
+export const updateProject = async (id: string, data: Partial<Project>): Promise<void> => {
+  // ... existing code ...
+};
+
+export const updateAboutData = async (data: Partial<AboutData>): Promise<void> => {
+  // ... existing code ...
 };

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { 
   Button, 
   Card, 
@@ -95,19 +94,6 @@ const blogPosts = [
     readTime: "8 min read"
   }
 ];
-
-// Utility to render each letter with a glow
-function GlowText({ text }: { text: string }) {
-  return (
-    <span>
-      {text.split("").map((char, i) => (
-        <span key={i} className="gradient-text shadow-glow-primary inline-block">
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </span>
-  );
-}
 
 export default function Home() {
   return (

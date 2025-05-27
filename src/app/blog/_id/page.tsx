@@ -5,6 +5,7 @@ import BlogContentImage from '@/components/BlogContentImage';
 import HydrateImages from '@/components/HydrateImages';
 import { Suspense } from 'react';
 import BlogPostContent from '@/components/BlogPostContent';
+import { Metadata } from 'next';
 
 // Add Blog type
 export type Blog = {

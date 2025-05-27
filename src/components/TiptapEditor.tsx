@@ -3,7 +3,7 @@
 'use client';
 
 import React, { forwardRef, useEffect } from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
@@ -19,7 +19,7 @@ interface TiptapEditorProps {
   onImageUpload?: (file: File) => Promise<string>;
 }
 
-const TiptapEditor = forwardRef<any, TiptapEditorProps>(({
+const TiptapEditor = forwardRef<Editor, TiptapEditorProps>(({
   content,
   onChange,
   placeholder = 'Start typing...',

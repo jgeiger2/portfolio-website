@@ -1,6 +1,6 @@
+import React from 'react';
 import { fetchBlogs } from '@/lib/firebase/firebaseUtils';
 import Link from 'next/link';
-import Image from 'next/image';
 import BlogImage from '@/components/BlogImage';
 import { 
   Container, 
@@ -10,7 +10,6 @@ import {
   CardTitle, 
   CardContent, 
   Badge,
-  AnimatedBackground
 } from '@/components/ui';
 
 export const metadata = {
@@ -64,16 +63,6 @@ export default async function BlogPage() {
     const wordCount = body.replace(/<[^>]*>/g, '').split(/\s+/).length;
     const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
     return `${readTimeMinutes} min read`;
-  };
-
-  // Function to extract excerpt from HTML body
-  const getExcerpt = (body: string, maxLength = 150) => {
-    if (!body) return '';
-    // Remove HTML tags and get plain text
-    const plainText = body.replace(/<[^>]*>/g, '');
-    if (plainText.length <= maxLength) return plainText;
-    // Truncate to maxLength characters
-    return plainText.substring(0, maxLength) + '...';
   };
 
   // Function to check if an image URL is valid
