@@ -1,11 +1,11 @@
 'use client';
 
 import { use } from 'react';
-import { fetchBlogs, Blog } from '@/lib/firebase/firebaseUtils';
-import { Blog as BlogType } from '@/types';
+import { fetchBlogs } from '@/lib/firebase/firebaseUtils';
+import { Blog } from '@/types';
 
-export default async function BlogPostContent({ id }: { id: string }) {
-  const blogs = await fetchBlogs();
+export default function BlogPostContent({ id }: { id: string }) {
+  const blogs = use(fetchBlogs());
   const blog = blogs.find(blog => blog.id === id);
 
   if (!blog) {
@@ -16,7 +16,7 @@ export default async function BlogPostContent({ id }: { id: string }) {
   const postContent = blog.content || blog.body || '';
 
   return (
-    <article>
+    <article className="prose prose-lg dark:prose-invert max-w-none">
       <h1>{blog.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: postContent }} />
     </article>

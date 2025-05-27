@@ -3,6 +3,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  User,
 } from "firebase/auth";
 import {
   collection,
@@ -15,9 +16,10 @@ import {
   orderBy,
   getDoc,
   setDoc,
+  DocumentData,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { BlogPost, Project, AboutData } from '@/types';
+import { BlogPost, Project, AboutData, Blog } from '@/types';
 
 // Auth functions
 export const logoutUser = () => signOut(auth);
@@ -34,18 +36,18 @@ export const signInWithGoogle = async () => {
 };
 
 // Firestore functions
-export const addDocument = (collectionName: string, data: any) =>
+export const addDocument = <T extends DocumentData>(collectionName: string, data: T) =>
   addDoc(collection(db, collectionName), data);
 
-export const getDocuments = async (collectionName: string) => {
+export const getDocuments = async <T extends DocumentData>(collectionName: string): Promise<T[]> => {
   const querySnapshot = await getDocs(collection(db, collectionName));
   return querySnapshot.docs.map(doc => ({
     id: doc.id,
     ...doc.data()
-  }));
+  })) as T[];
 };
 
-export const updateDocument = (collectionName: string, id: string, data: any) =>
+export const updateDocument = <T extends DocumentData>(collectionName: string, id: string, data: Partial<T>) =>
   updateDoc(doc(db, collectionName, id), data);
 
 export const deleteDocument = (collectionName: string, id: string) =>
@@ -59,36 +61,23 @@ export const uploadFile = async (file: File, path: string) => {
 };
 
 // Fetch projects ordered by 'order' field
-export const fetchProjects = async () => {
+export const fetchProjects = async (): Promise<Project[]> => {
   const q = query(collection(db, "projects"), orderBy("order", "asc"));
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(doc => ({
     id: doc.id,
     ...doc.data(),
-  }));
-};
-
-// Add Blog type
-export type Blog = {
-  id: string;
-  title?: string;
-  subtitle?: string;
-  body?: string;
-  category?: string;
-  datePublished?: string;
-  featuredImage?: string;
-  categories?: string[];
-  importedFromMedium?: boolean;
+  })) as Project[];
 };
 
 // Blog Firestore functions
 export const fetchBlogs = async (): Promise<Blog[]> => {
   const q = query(collection(db, "blog"), orderBy("datePublished", "desc"));
   const querySnapshot = await getDocs(q);
-  const blogs: Blog[] = querySnapshot.docs.map(doc => ({
+  const blogs = querySnapshot.docs.map(doc => ({
     id: doc.id,
     ...doc.data(),
-  }));
+  })) as Blog[];
   
   // Debug logs
   console.log("Total blogs fetched:", blogs.length);
@@ -100,16 +89,36 @@ export const fetchBlogs = async (): Promise<Blog[]> => {
   return blogs;
 };
 
-export const addBlog = (data: any) => addDoc(collection(db, "blog"), data);
+export const addBlog = (data: Partial<Blog>) => addDoc(collection(db, "blog"), data);
 
-export const updateBlog = (id: string, data: any) => updateDoc(doc(db, "blog", id), data);
+export const updateBlog = (id: string, data: Partial<Blog>) => updateDoc(doc(db, "blog", id), data);
 
 export const deleteBlog = (id: string) => deleteDoc(doc(db, "blog", id));
 
 // Import blogs from Medium RSS feed
-export const importBlogsFromMedium = async (mediumUsername: string) => {
+interface MediumRSSItem {
+  title: string;
+  content: string;
+  thumbnail: string;
+  link: string;
+  pubDate: string;
+  categories: string[];
+  author: string;
+  enclosure?: {
+    link: string;
+  };
+}
+
+interface MediumImportResult {
+  success: boolean;
+  totalImported?: number;
+  totalSkipped?: number;
+  blogs?: Blog[];
+  error?: string;
+}
+
+export const importBlogsFromMedium = async (mediumUsername: string): Promise<MediumImportResult> => {
   try {
-    // Fetch the RSS feed from Medium
     const rssUrl = `https://medium.com/feed/@${mediumUsername}`;
     const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
     
@@ -123,65 +132,40 @@ export const importBlogsFromMedium = async (mediumUsername: string) => {
       throw new Error(`RSS feed error: ${data.message || 'Unknown error'}`);
     }
     
-    // Process each item from the feed
-    const blogs = await Promise.all(data.items.map(async (item: any) => {
-      // Extract the content from the HTML
-      const content = item.content;
-      
-      console.log("Medium RSS item:", {
-        title: item.title,
-        thumbnail: item.thumbnail,
-      });
-      
-      // Extract the story preview image
+    const blogs = await Promise.all(data.items.map(async (item: MediumRSSItem) => {
       let featuredImage = '';
       
-      // First priority: use the thumbnail from the RSS feed
-      if (item.thumbnail && item.thumbnail !== '') {
+      if (item.thumbnail) {
         featuredImage = item.thumbnail;
-        console.log("Using RSS thumbnail:", featuredImage);
       }
       
-      // Second priority: extract "data-image-id" images which are usually high quality Medium preview images
-      if (!featuredImage || featuredImage === '') {
-        // Look for the main story image with a pattern like:
-        // <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*SOME_ID.jpeg" />
+      if (!featuredImage) {
         const storyImageRegex = /<img[^>]*src="(https:\/\/miro\.medium\.com\/v2\/resize:fit:1400\/[^"]+)"[^>]*>/i;
-        const storyMatch = storyImageRegex.exec(content);
+        const storyMatch = storyImageRegex.exec(item.content);
         
-        if (storyMatch && storyMatch[1]) {
+        if (storyMatch?.[1]) {
           featuredImage = storyMatch[1];
-          console.log("Extracted story preview image:", featuredImage);
         }
       }
       
-      // Third priority: extract any image from the content
-      if (!featuredImage || featuredImage === '') {
+      if (!featuredImage) {
         const imgRegex = /<img[^>]+src="([^">]+)"/;
-        const match = imgRegex.exec(content);
-        if (match && match[1]) {
+        const match = imgRegex.exec(item.content);
+        if (match?.[1]) {
           featuredImage = match[1];
-          console.log("Extracted general image from content:", featuredImage);
         }
       }
       
-      // Fourth priority: try to use the enclosure if available
-      if ((!featuredImage || featuredImage === '') && item.enclosure && item.enclosure.link) {
+      if (!featuredImage && item.enclosure?.link) {
         featuredImage = item.enclosure.link;
-        console.log("Using enclosure image:", featuredImage);
       }
       
-      // Ensure the image URL uses https
-      if (featuredImage && featuredImage.startsWith('http:')) {
+      if (featuredImage?.startsWith('http:')) {
         featuredImage = featuredImage.replace('http:', 'https:');
       }
       
-      console.log("Final featured image for", item.title, ":", featuredImage);
-      
-      // Format date
       const datePublished = new Date(item.pubDate).toISOString();
       
-      // Check if blog with this title or link already exists
       const blogQuery = query(collection(db, "blog"));
       const querySnapshot = await getDocs(blogQuery);
       const existingBlog = querySnapshot.docs.find(doc => {
@@ -198,32 +182,27 @@ export const importBlogsFromMedium = async (mediumUsername: string) => {
         };
       }
       
-      // Create blog object
-      const blogData = {
+      const blogData: Partial<Blog> = {
         title: item.title,
-        slug: item.title.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-'),
-        content: content,
-        excerpt: item.description,
-        featuredImage: featuredImage,
-        datePublished: datePublished,
+        content: item.content,
+        excerpt: item.content.replace(/<[^>]*>/g, '').substring(0, 160),
+        featuredImage,
+        datePublished,
         originalLink: item.link,
-        categories: item.categories || [],
+        categories: item.categories,
         importedFromMedium: true,
-        author: item.author || 'Medium',
-        body: content,
+        author: item.author,
       };
       
-      // Add to Firestore
       const docRef = await addDoc(collection(db, "blog"), blogData);
       
       return {
         id: docRef.id,
         ...blogData
-      };
+      } as Blog;
     }));
     
-    // Filter out skipped blogs
-    const importedBlogs = blogs.filter((blog: any) => !blog.skipped);
+    const importedBlogs = blogs.filter(blog => !('skipped' in blog));
     
     return {
       success: true,
@@ -241,23 +220,22 @@ export const importBlogsFromMedium = async (mediumUsername: string) => {
 };
 
 // About page content functions
-export const fetchSkills = async () => {
+export const fetchSkills = async (): Promise<string[]> => {
   try {
     const docRef = doc(db, "about", "skills");
     const docSnap = await getDoc(docRef);
     
     if (docSnap.exists()) {
       return docSnap.data().items || [];
-    } else {
-      return [];
     }
+    return [];
   } catch (error) {
     console.error("Error fetching skills:", error);
     return [];
   }
 };
 
-export const updateSkills = async (skills: any[]) => {
+export const updateSkills = async (skills: string[]): Promise<boolean> => {
   try {
     await setDoc(doc(db, "about", "skills"), { items: skills });
     return true;
@@ -274,16 +252,15 @@ export const fetchTimeline = async () => {
     
     if (docSnap.exists()) {
       return docSnap.data().items || [];
-    } else {
-      return [];
     }
+    return [];
   } catch (error) {
     console.error("Error fetching timeline:", error);
     return [];
   }
 };
 
-export const updateTimeline = async (timeline: any[]) => {
+export const updateTimeline = async (timeline: AboutData['experience']): Promise<boolean> => {
   try {
     await setDoc(doc(db, "about", "timeline"), { items: timeline });
     return true;
@@ -293,51 +270,45 @@ export const updateTimeline = async (timeline: any[]) => {
   }
 };
 
-// Default data to initialize Firebase with if none exists
-const defaultSkills = [
-  { name: 'React', level: 90, category: 'frontend' },
-  { name: 'Next.js', level: 85, category: 'frontend' },
-  { name: 'TypeScript', level: 80, category: 'language' },
-  { name: 'Node.js', level: 85, category: 'backend' },
-  { name: 'Firebase', level: 80, category: 'backend' },
-  { name: 'Tailwind CSS', level: 90, category: 'frontend' },
+// Default data
+const defaultSkills: string[] = [
+  'React',
+  'Next.js',
+  'TypeScript',
+  'Node.js',
+  'Firebase',
+  'Tailwind CSS',
 ];
 
-const defaultTimelineData = [
+const defaultTimelineData: AboutData['experience'] = [
   {
-    title: "Product Designer",
     company: "Lowe's",
-    period: "2024-Present",
-    description: "Leading design initiatives for digital products, collaborating with cross-functional teams to create intuitive user experiences.",
-    icon: "briefcase"
+    position: "Product Designer",
+    duration: "2024-Present",
+    description: "Leading design initiatives for digital products, collaborating with cross-functional teams to create intuitive user experiences."
   },
   {
-    title: "Senior UX Designer",
     company: "Design Agency",
-    period: "2017-2020",
-    description: "Created user-centered designs for various clients across retail, finance, and healthcare sectors.",
-    icon: "briefcase"
+    position: "Senior UX Designer",
+    duration: "2017-2020",
+    description: "Created user-centered designs for various clients across retail, finance, and healthcare sectors."
   },
 ];
 
 // Initialize About page data in Firebase
 export const initializeAboutData = async () => {
   try {
-    // Check if skills data exists
     const skillsRef = doc(db, "about", "skills");
     const skillsSnap = await getDoc(skillsRef);
     
-    // Check if timeline data exists
     const timelineRef = doc(db, "about", "timeline");
     const timelineSnap = await getDoc(timelineRef);
     
-    // Initialize skills if not exists
     if (!skillsSnap.exists()) {
       console.log("Initializing skills data in Firebase...");
       await setDoc(skillsRef, { items: defaultSkills });
     }
     
-    // Initialize timeline if not exists
     if (!timelineSnap.exists()) {
       console.log("Initializing timeline data in Firebase...");
       await setDoc(timelineRef, { items: defaultTimelineData });
