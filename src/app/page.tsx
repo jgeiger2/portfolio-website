@@ -99,7 +99,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section with Animation */}
-      <Section className="min-h-[85vh] flex items-center bg-gradient-playful from-primary-100 via-background-light to-secondary-100 dark:from-primary-950 dark:via-background-dark dark:to-secondary-950 overflow-hidden relative">
+      <Section className="min-h-[85vh] flex items-center bg-gradient-playful from-primary-100 via-background-light to-secondary-100 dark:bg-background overflow-hidden relative">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-accent-500 blur-3xl animate-float"></div>
           <div className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-tertiary-500 blur-3xl animate-float-delayed"></div>
